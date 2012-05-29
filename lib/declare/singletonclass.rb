@@ -5,6 +5,8 @@ module Declare
 
   @unexpected_failures = {}
   @categories = {}
+  @failures = {}
+  @scope = nil
   @scope_counter, @failure_counter, @pass_counter, @declare_counter = 0, 0, 0, 0
       
   class << self
@@ -20,16 +22,13 @@ module Declare
       @categories[title] = Category.new
     end
     
-    def clear!
-      @scope_counter, @failure_counter, @pass_counter, @declare_counter = 0, 0, 0, 0
-    end
-    
     def declared!
       @declare_counter += 1
     end
 
-    def scope!
+    def scope!(scope)
       @scope_counter += 1
+      @scope = scope
     end
 
     def pass!
@@ -38,11 +37,15 @@ module Declare
     
     def failure!(report)
       @failure_counter += 1
-
-      puts report
+      @failures[@scope] ||= []
+      @failures[@scope] << report
     end
 
     def report
+      @failures.each_pair do |scope, text|
+        puts "# #{scope}", text, nil
+      end
+      
       puts '-' * 76
       puts "#{@categories.length} categorized, #{@scope_counter} scoped, #{@declare_counter} declared"
       puts " Unexpected Failers: #{@unexpected_failures.inspect}" unless @unexpected_failures.empty?

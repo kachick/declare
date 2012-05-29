@@ -9,27 +9,129 @@ A unit testing framework with tiny DSL.
 
 == Futures
 
-* Readable from "declare" synatx.
-* tiny keyboard typings :)
+* Readable from "declare" syntax.
+* Tiny keyboard typings :)
 
 == Usage
 
-* Setup
+=== Common Setup
     require 'my_app'   # Write here tha path, own lib or codes
     require 'declare'  # at Last of requires
 
-* Overview
+=== When all passed
 
- 
+==== Declare your image
+
+    Declare do
+
+      The(Array) {
+        
+        a       Class
+        kind    Module
+        respond :new
+        
+      }
+
+      The(1) {
+        
+        is      1.0
+        is      1.to_r
+        NOT     2
+        match   1..3
+        equal   1
+        hashable
+        kind    Integer
+        a       Fixnum
+        respond :upto
+        
+        RESCUE Exception do
+          raise
+        end
+        
+        CATCH NameError do
+          to_str
+        end
+        
+      }
+
+    end
+
+===== Report
+
+    ----------------------------------------------------------------------------
+    1 categorized, 2 scoped, 14 declared
+        pass: 14
+        fail: 0
+
+
+=== When all failed
+
+==== Declare your image
+
+    Declare do
+
+      The(Array) {
+        
+        a       Module
+        kind    Hash
+        respond :to_str
+        
+      }
+
+      The(1) {
+        
+        is      1.1
+        is      2
+        NOT     1
+        match   2..3
+        equal   1.0
+        kind    Float
+        a       Integer
+        respond :to_str
+        
+        RESCUE SyntaxError do
+          raise
+        end
+        
+        CATCH RuntimeError do
+          raise Exception
+        end
+        
+      }
+
+    end
+
+===== Report
+
+    # Array
+    Array is declared "It's instance of Module", but failed. Real is instance of Class.(failuers.rb:9:in `block (2 levels) in <main>')
+    Array is declared "It's family of Hash", but failed. (failuers.rb:10:in `block (2 levels) in <main>')
+    Array is declared "It can behave the order #to_str.", but failed. (failuers.rb:11:in `block (2 levels) in <main>')
+
+    # 1
+    1 is declared "It's euqualy value with 1.1 under bidirectical #== method.", but failed. (failuers.rb:17:in `block (2 levels) in <main>')
+    1 is declared "It's euqualy value with 2 under bidirectical #== method.", but failed. (failuers.rb:18:in `block (2 levels) in <main>')
+    1 is declared "It isn't 1.", but failed. (failuers.rb:19:in `block (2 levels) in <main>')
+    1 is declared "It satisfies a condition under 2..3.", but failed. (failuers.rb:20:in `block (2 levels) in <main>')
+    1 is declared "It's same object/identififer with 1.0(ID: 22148112).", but failed. Real is 1(ID: 3)(failuers.rb:21:in `block (2 levels) in <main>')
+    1 is declared "It's family of Float", but failed. (failuers.rb:22:in `block (2 levels) in <main>')
+    1 is declared "It's instance of Integer", but failed. Real is instance of Fixnum.(failuers.rb:23:in `block (2 levels) in <main>')
+    1 is declared "It can behave the order #to_str.", but failed. (failuers.rb:24:in `block (2 levels) in <main>')
+    1 is declared "It raises a exception kind of SyntaxError.", but failed. Real is faced another exception the NameError.(failuers.rb:26:in `block (2 levels) in <main>')
+    1 is declared "It raises the exception RuntimeError.", but failed. Real is faced another exception the NoMethodError.(failuers.rb:30:in `block (2 levels) in <main>')
+
+    ----------------------------------------------------------------------------
+    1 categorized, 2 scoped, 13 declared
+        pass: 0
+        fail: 13
 
 == Requirements
 
-* Ruby 1.9.2 or later
+* Ruby 1.9.3 or later
   
   Focusing
   
   * 1.9.3-p194
-  * 1.9.2-p290
 
 == Installation
 

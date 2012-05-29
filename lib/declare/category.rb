@@ -5,12 +5,11 @@ module Declare
 
   class Category < BasicObject
     
-    def The(object, &block)
-      Scope.new(object).instance_exec(&block)
+    def The(target, &block)
+      ::Declare.scope! target
+      Scope.new(target).instance_exec(&block)
     rescue ::Exception
-      ::Declare.unexpected_failure_in_the object, $!, ::Kernel.caller
-    ensure
-      ::Declare.scope!
+      ::Declare.unexpected_failure_in_the target, $!, ::Kernel.caller
     end
     
   end

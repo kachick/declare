@@ -23,7 +23,7 @@ module Declare
       if A? klass
         pass
       else
-        failure _caller, "It's instance of #{klass}", "Real is instance of #{@target.class}."
+        failure _caller[1], "It's instance of #{klass}", "Real is instance of #{@target.class}."
       end
     ensure
       _declared!
@@ -41,7 +41,7 @@ module Declare
       if KIND? family
         pass
       else
-        failure _caller, "It's family of #{family.inspect}"
+        failure _caller[1], "It's family of #{family.inspect}"
       end
     ensure
       _declared!
@@ -64,7 +64,7 @@ module Declare
       if HASHABLE? sample
         pass
       else
-        failure _caller, 'It\'s able to use key in any Hash object.'
+        failure _caller[1], 'It\'s able to use key in any Hash object.'
       end
     ensure
       _declared!
@@ -83,7 +83,7 @@ module Declare
       if IS? other
         pass
       else
-        failure _caller, "It\'s euqualy value with #{other.inspect} under bidirectical #== method."
+        failure _caller[1], "It\'s euqualy value with #{other.inspect} under bidirectical #== method."
       end
     ensure
       _declared!
@@ -103,7 +103,7 @@ module Declare
       if NOT? other
         pass
       else
-        failure _caller, "It isn't #{other.inspect}."
+        failure _caller[1], "It isn't #{other.inspect}."
       end
     ensure
       _declared!
@@ -121,7 +121,7 @@ module Declare
       if MATCH? condition
         pass
       else
-        failure _caller, "It satisfies a condition of #{condition.inspect}."
+        failure _caller[1], "It satisfies a condition under #{condition.inspect}."
       end
     ensure
       _declared!
@@ -140,7 +140,7 @@ module Declare
       if EQUAL? other
         pass
       else
-        failure _caller, "It's same object/identififer with #{other.inspect}(#{other.__id__})."
+        failure _caller[1], "It's same object/identififer with #{other.inspect}(ID: #{other.__id__}).", "Real is #{@target.inspect}(ID: #{@target.__id__})"
       end
     ensure
       _declared!
@@ -159,7 +159,7 @@ module Declare
       if RESPOND? message
         pass
       else
-        failure _caller, "It can behave the order ##{message}."
+        failure _caller[1], "It can behave the order ##{message}."
       end
     ensure
       _declared!
@@ -173,9 +173,9 @@ module Declare
     rescue exception_klass
       pass
     rescue ::Exception
-      failure _caller, "It raises a exception kind of #{exception_klass}.", "Real is faced another exception the #{$!.class}."
+      failure _caller[2], "It raises a exception kind of #{exception_klass}.", "Real is faced another exception the #{$!.class}."
     else
-      failure _caller, "It raises a exception kind of #{exception_klass}.", "Real is not faced any exceptions."
+      failure _caller[2], "It raises a exception kind of #{exception_klass}.", "Real is not faced any exceptions."
     ensure
       _declared!
     end
@@ -187,10 +187,10 @@ module Declare
       if $!.instance_of? exception_klass
         pass
       else
-        failure _caller, "It raises the exception #{exception_klass}.", "Real is faced another exception the #{$!.class}."
+        failure _caller[2], "It raises the exception #{exception_klass}.", "Real is faced another exception the #{$!.class}."
       end
     else
-      failure _caller, "It raises the exception #{exception_klass}.", "Real is not faced any exceptions."
+      failure _caller[2], "It raises the exception #{exception_klass}.", "Real is not faced any exceptions."
     ensure
       _declared!
     end
@@ -213,8 +213,8 @@ module Declare
       ::Declare.pass!
     end
     
-    def failure(__caller, declared, real=nil)
-      ::Declare.failure! "#{@target.inspect} is declared \"#{declared}\", but failed. #{real}(#{__caller.first})"
+    def failure(called_from, declared, real=nil)
+      ::Declare.failure! "#{@target.inspect} is declared \"#{declared}\", but failed. #{real}(#{called_from})"
     end
 
   end

@@ -1,6 +1,6 @@
 $VERBOSE = true
 
-require_relative 'lib/declare'
+require_relative '../lib/declare'
 
 Declare do
 
@@ -36,7 +36,12 @@ Declare do
 
 end
 
+=begin
 
-# 1 categorized, 2 scoped, 14 declared
-#   pass: 14
-#   fail: 0
+----------------------------------------------------------------------------
+1 categorized, 2 scoped, 14 declared
+    pass: 14
+    fail: 0
+
+=end
+
