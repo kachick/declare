@@ -1,0 +1,13 @@
+README.rdoc
+LICENSE
+History.rdoc
+Manifest.txt
+Rakefile
+lib/declare.rb
+lib/declare/version.rb
+lib/declare/exceptios.rb
+lib/declare/scope.rb
+lib/declare/category.rb
+lib/declare/singletonclass.rb
+lib/declare/main.rb
+example/successfull.rb

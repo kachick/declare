@@ -1,0 +1,44 @@
+= declare
+
+code :: http://github.com/kachick/declare
+gem  :: http://rubygems.org/gems/declare
+
+== Description
+
+A unit testing framework with tiny DSL.
+
+== Futures
+
+* Readable from "declare" synatx.
+* tiny keyboard typings :)
+
+== Usage
+
+* Setup
+    require 'my_app'   # Write here tha path, own lib or codes
+    require 'declare'  # at Last of requires
+
+* Overview
+
+ 
+
+== Requirements
+
+* Ruby 1.9.2 or later
+  
+  Focusing
+  
+  * 1.9.3-p194
+  * 1.9.2-p290
+
+== Installation
+
+* gem install declare
+
+== License
+
+The MIT X11 License
+
+Copyright (c) 2012 Kenichi Kamiya
+
+See the file LICENSE for further details.
