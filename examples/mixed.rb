@@ -7,7 +7,7 @@ class Person
   
   def initialize(name)
     @name = name
-    @birth = Time.new
+    @birth = Time.now
   end
 
 end
@@ -58,8 +58,8 @@ end
 =begin
 # Below points are not satisfied some conditions.
 
-## "\"John\" (new_api.rb:47)"
-  * "It's euqualy value with "Taro" under bidirectical #== method.", but failed. (new_api.rb:49:in `block (3 levels) in <main>')
+## "\"John\" (filename.rb:47)"
+  * "It's euqualy value with "Taro" under bidirectical #== method.", but failed. (filename.rb:49:in `block (3 levels) in <main>')
 
 ----------------------------------------------------------------------------
 1 categorizies, 4 scopes, 10 behaviors

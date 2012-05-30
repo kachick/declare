@@ -147,7 +147,7 @@ A unit testing framework with tiny DSL.
       
       def initialize(name)
         @name = name
-        @birth = Time.new
+        @birth = Time.now
       end
 
     end
@@ -200,7 +200,7 @@ A unit testing framework with tiny DSL.
     # Below points are not satisfied some conditions.
 
     ## "\"John\" (filename.rb:44)"
-      * "It's euqualy value with "Taro" under bidirectical #== method.", but failed. (new_api.rb:46:in `block (3 levels) in <main>')
+      * "It's euqualy value with "Taro" under bidirectical #== method.", but failed. (filename.rb:46:in `block (3 levels) in <main>')
 
     ----------------------------------------------------------------------------
     1 categorizies, 4 scopes, 10 behaviors
