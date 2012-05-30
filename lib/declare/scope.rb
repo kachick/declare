@@ -5,20 +5,22 @@ module Declare
 
   class Scope < BasicObject
     
+    attr_reader :target
+    
     def initialize(object)
       @target = object
     end
     
-    def it
-      @target
-    end
-    
+    alias_method :it, :target
+
+    # @param [Class] klass
     def A?(klass)
       @target.instance_of? klass
     end
     
     alias_method :a?, :A?
     
+    # @param [Class] klass
     def A(klass)
       if A? klass
         pass
@@ -109,6 +111,7 @@ module Declare
       _declared!
     end
     
+    # @param [#===] condition
     def MATCH?(condition)
       condition === @target
     end
@@ -116,7 +119,8 @@ module Declare
     alias_method :match?, :MATCH?
     alias_method :SATISFY?, :MATCH?
     alias_method :satisfy?, :SATISFY?
-
+  
+    # @param [#===] condition
     def MATCH(condition)
       if MATCH? condition
         pass
@@ -166,8 +170,45 @@ module Declare
     end
     
     alias_method :respond, :RESPOND
+ 
+    def TRUTHY?(object)
+      !! object
+    end
+
+    alias_method :truthy?, :TRUTHY?
+
+    def TRUTHY(object)
+      if TRUTHY? object
+        pass
+      else
+        failure _caller[1], "\"#{object.inspect}\" is a truthy one."
+      end
+    ensure
+      _declared!
+    end
     
+    alias_method :truthy, :TRUTHY
+ 
+    def FALTHY?(object)
+      ! object
+    end
+
+    alias_method :falthy?, :FALTHY?
+
+    def FALTHY(object)
+      if FALTHY? object
+        pass
+      else
+        failure _caller[1], "\"#{object.inspect}\" is a falthy one."
+      end
+    ensure
+      _declared!
+    end
+    
+    alias_method :falthy, :FALTHY
+
     # pass if occured the error is a own/subclassis instance
+    # @param [Class] exception_klass
     def RESCUE(exception_klass, &block)
       block.call
     rescue exception_klass
@@ -181,6 +222,7 @@ module Declare
     end
     
     # pass if occured the error is just a own instance
+    # @param [Class] exception_klass
     def CATCH(exception_klass, &block)
       block.call
     rescue ::Exception
@@ -194,6 +236,13 @@ module Declare
     ensure
       _declared!
     end
+    
+    # into the nest scope
+    def on(target, &block)
+      Category.new.on(target, _caller[1], &block)
+    end
+    
+    alias_method :The, :on
 
     private
     
@@ -214,6 +263,10 @@ module Declare
     end
     
     def failure(called_from, declared, real=nil)
+      ::Declare.failure! "\"#{declared}\", but failed. #{real}(#{called_from})"
+    end
+    
+    def failure_baisc(called_from, declared, real=nil)
       ::Declare.failure! "#{@target.inspect} is declared \"#{declared}\", but failed. #{real}(#{called_from})"
     end
 

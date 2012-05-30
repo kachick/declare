@@ -1,7 +1,8 @@
 = declare
 
-code :: http://github.com/kachick/declare
-gem  :: http://rubygems.org/gems/declare
+code :: https://github.com/kachick/declare
+bugs :: https://github.com/kachick/declare/issues
+gem  :: https://rubygems.org/gems/declare
 
 == Description
 
@@ -9,7 +10,7 @@ A unit testing framework with tiny DSL.
 
 == Futures
 
-* Readable from "declare" syntax.
+* Readable from "declaratory" syntax.
 * Tiny keyboard typings :)
 
 == Usage
@@ -24,7 +25,7 @@ A unit testing framework with tiny DSL.
 
     Declare do
 
-      The(Array) {
+      on(Array) {
         
         a       Class
         kind    Module
@@ -32,7 +33,7 @@ A unit testing framework with tiny DSL.
         
       }
 
-      The(1) {
+      on(1) {
         
         is      1.0
         is      1.to_r
@@ -58,8 +59,7 @@ A unit testing framework with tiny DSL.
 
 ===== Report
 
-    ----------------------------------------------------------------------------
-    1 categorized, 2 scoped, 14 declared
+    1 categorizies, 2 scopes, 14 behaviors
         pass: 14
         fail: 0
 
@@ -70,15 +70,22 @@ A unit testing framework with tiny DSL.
 
     Declare do
 
-      The(Array) {
+      on(Array) {
         
         a       Module
         kind    Hash
         respond :to_str
         
+        on(it.new) {
+
+          a Hash
+          
+        }
+
+        
       }
 
-      The(1) {
+      on(1) {
         
         is      1.1
         is      2
@@ -103,27 +110,102 @@ A unit testing framework with tiny DSL.
 
 ===== Report
 
-    # Array
-    Array is declared "It's instance of Module", but failed. Real is instance of Class.(failuers.rb:9:in `block (2 levels) in <main>')
-    Array is declared "It's family of Hash", but failed. (failuers.rb:10:in `block (2 levels) in <main>')
-    Array is declared "It can behave the order #to_str.", but failed. (failuers.rb:11:in `block (2 levels) in <main>')
+    # Below points are not satisfied some conditions.
 
-    # 1
-    1 is declared "It's euqualy value with 1.1 under bidirectical #== method.", but failed. (failuers.rb:17:in `block (2 levels) in <main>')
-    1 is declared "It's euqualy value with 2 under bidirectical #== method.", but failed. (failuers.rb:18:in `block (2 levels) in <main>')
-    1 is declared "It isn't 1.", but failed. (failuers.rb:19:in `block (2 levels) in <main>')
-    1 is declared "It satisfies a condition under 2..3.", but failed. (failuers.rb:20:in `block (2 levels) in <main>')
-    1 is declared "It's same object/identififer with 1.0(ID: 22148112).", but failed. Real is 1(ID: 3)(failuers.rb:21:in `block (2 levels) in <main>')
-    1 is declared "It's family of Float", but failed. (failuers.rb:22:in `block (2 levels) in <main>')
-    1 is declared "It's instance of Integer", but failed. Real is instance of Fixnum.(failuers.rb:23:in `block (2 levels) in <main>')
-    1 is declared "It can behave the order #to_str.", but failed. (failuers.rb:24:in `block (2 levels) in <main>')
-    1 is declared "It raises a exception kind of SyntaxError.", but failed. Real is faced another exception the NameError.(failuers.rb:26:in `block (2 levels) in <main>')
-    1 is declared "It raises the exception RuntimeError.", but failed. Real is faced another exception the NoMethodError.(failuers.rb:30:in `block (2 levels) in <main>')
+    ## "Array (failuers.rb:7)"
+      * "It's instance of Module", but failed. Real is instance of Class.(failuers.rb:9:in `block (2 levels) in <main>')
+      * "It's family of Hash", but failed. (failuers.rb:10:in `block (2 levels) in <main>')
+      * "It can behave the order #to_str.", but failed. (failuers.rb:11:in `block (2 levels) in <main>')
+
+    ## "[] (failuers.rb:13)"
+      * "It's instance of Hash", but failed. Real is instance of Array.(failuers.rb:15:in `block (3 levels) in <main>')
+
+    ## "1 (failuers.rb:22)"
+      * "It's euqualy value with 1.1 under bidirectical #== method.", but failed. (failuers.rb:24:in `block (2 levels) in <main>')
+      * "It's euqualy value with 2 under bidirectical #== method.", but failed. (failuers.rb:25:in `block (2 levels) in <main>')
+      * "It isn't 1.", but failed. (failuers.rb:26:in `block (2 levels) in <main>')
+      * "It satisfies a condition under 2..3.", but failed. (failuers.rb:27:in `block (2 levels) in <main>')
+      * "It's same object/identififer with 1.0(ID: 21459768).", but failed. Real is 1(ID: 3)(failuers.rb:28:in `block (2 levels) in <main>')
+      * "It's family of Float", but failed. (failuers.rb:29:in `block (2 levels) in <main>')
+      * "It's instance of Integer", but failed. Real is instance of Fixnum.(failuers.rb:30:in `block (2 levels) in <main>')
+      * "It can behave the order #to_str.", but failed. (failuers.rb:31:in `block (2 levels) in <main>')
+      * "It raises a exception kind of SyntaxError.", but failed. Real is faced another exception the NameError.(failuers.rb:33:in `block (2 levels) in <main>')
+      * "It raises the exception RuntimeError.", but failed. Real is faced another exception the NoMethodError.(failuers.rb:37:in `block (2 levels) in <main>')
 
     ----------------------------------------------------------------------------
-    1 categorized, 2 scoped, 13 declared
+    1 categorizies, 3 scopes, 14 behaviors
         pass: 0
-        fail: 13
+        fail: 14
+
+=== Mixed
+
+==== Declare your image
+
+    class Person
+      
+      attr_reader :name, :birth
+      
+      def initialize(name)
+        @name = name
+        @birth = Time.new
+      end
+
+    end
+
+    require 'declare'
+
+    Declare do
+      
+      on Person.new('John') do
+        
+        # OK section
+        
+        respond :name
+        respond :birth
+        a        Person
+        kind     Object
+        
+        NOT 'Taro'
+        
+        on it.name do
+          
+          kind String
+      
+        end
+
+        on it.birth do
+          
+          kind Time
+          
+        end
+
+        truthy it.name.kind_of?(String)
+        falthy it.name.match(/[1-9]/)
+        
+        # NG section
+        
+        on it.name do
+          
+          is 'Taro'
+        
+        end
+        
+        
+      end
+      
+    end
+
+===== Report
+
+    # Below points are not satisfied some conditions.
+
+    ## "\"John\" (filename.rb:44)"
+      * "It's euqualy value with "Taro" under bidirectical #== method.", but failed. (new_api.rb:46:in `block (3 levels) in <main>')
+
+    ----------------------------------------------------------------------------
+    1 categorizies, 4 scopes, 10 behaviors
+        pass: 9
+        fail: 1
 
 == Requirements
 

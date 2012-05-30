@@ -7,7 +7,7 @@ module Declare
   @categories = {}
   @failures = {}
   @scope = nil
-  @scope_counter, @failure_counter, @pass_counter, @declare_counter = 0, 0, 0, 0
+  @scope_counter, @pass_counter, @declare_counter = 0, 0, 0, 0
       
   class << self
     
@@ -26,9 +26,9 @@ module Declare
       @declare_counter += 1
     end
 
-    def scope!(scope)
+    def scope!(scope, _caller)
       @scope_counter += 1
-      @scope = scope
+      @scope = "#{scope.inspect} (#{_caller.slice(/\A(.+?:\d+)/, 1)})"
     end
 
     def pass!
@@ -36,21 +36,31 @@ module Declare
     end
     
     def failure!(report)
-      @failure_counter += 1
       @failures[@scope] ||= []
       @failures[@scope] << report
     end
 
     def report
-      @failures.each_pair do |scope, text|
-        puts "# #{scope}", text, nil
+      unless @failures.empty?
+        puts '# Below points are not satisfied some conditions.'
+        puts
+
+        @failures.each_pair do |scope, lines|
+          puts "## #{scope.inspect}"
+
+          lines.each do |line|
+            puts "  * #{line}"
+          end
+          puts
+        end
+        
+        puts '-' * 76
       end
-      
-      puts '-' * 76
-      puts "#{@categories.length} categorized, #{@scope_counter} scoped, #{@declare_counter} declared"
+
+      puts "#{@categories.length} categorizies, #{@scope_counter} scopes, #{@declare_counter} behaviors"
       puts " Unexpected Failers: #{@unexpected_failures.inspect}" unless @unexpected_failures.empty?
       puts "    pass: #{@pass_counter}"
-      puts "    fail: #{@failure_counter}"
+      puts "    fail: #{@failures.values.flatten.length}"
     end
     
   end

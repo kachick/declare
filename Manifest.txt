@@ -10,5 +10,6 @@ lib/declare/scope.rb
 lib/declare/category.rb
 lib/declare/singletonclass.rb
 lib/declare/main.rb
-example/successfull.rb
-example/failuers.rb
+examples/successfull.rb
+examples/failuers.rb
+examples/mixed.rb

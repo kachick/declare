@@ -4,7 +4,7 @@ require_relative '../lib/declare'
 
 Declare do
 
-  The(Array) {
+  on(Array) {
     
     a       Class
     kind    Module
@@ -12,7 +12,7 @@ Declare do
     
   }
 
-  The(1) {
+  on(1) {
     
     is      1.0
     is      1.to_r
@@ -38,8 +38,7 @@ end
 
 =begin
 
-----------------------------------------------------------------------------
-1 categorized, 2 scoped, 14 declared
+1 categorizies, 2 scopes, 14 behaviors
     pass: 14
     fail: 0
 
