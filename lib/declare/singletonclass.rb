@@ -19,7 +19,7 @@ module Declare
       title = title.to_s
       raise DupulicatedCategoryError if @categories.has_key? title
 
-      @categories[title] = Category.new
+      @categories[title] = DSL::Basic.new
     end
     
     def declared!

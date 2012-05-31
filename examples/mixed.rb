@@ -14,42 +14,22 @@ end
 
 require '../lib/declare'
 
-Declare do
+Declare 'Simple case' do   # start to declare with categorizing text
   
-  on Person.new('John') do
-    
-    # OK section
-    
-    respond :name
-    respond :birth
-    a        Person
-    kind     Object
-    
-    NOT 'Taro'
-    
-    on it.name do
-      
-      kind String
+  # This block is going to be evaluated in Declare::DSL::Basic
+  # "it" was undefined
   
-    end
+  The Person do
+    
+    # This block is going to be evaluated in Declare::DSL::Asertion(inherited Declare::DSL::Basic)
+    # "it" is point to the "Person class"
 
-    on it.birth do
-      
-      kind Time
-      
-    end
+    The it.new('John') do
+    
+      # This block is going to be evaluated in Declare::DSL::Asertion(inherited Declare::DSL::Basic)
+      # "it" is point to the "John"
 
-    truthy it.name.kind_of?(String)
-    falthy it.name.match(/[1-9]/)
-    
-    # NG section
-    
-    on it.name do
-      
-      is 'Taro'
-    
     end
-    
     
   end
   
