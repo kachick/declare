@@ -3,8 +3,6 @@
 
 class << self
   
-  private
-
   # @param [String] title
   # @return [void]
   def Declare(title=nil, &block)

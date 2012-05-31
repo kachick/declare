@@ -6,10 +6,12 @@ Rakefile
 lib/declare.rb
 lib/declare/version.rb
 lib/declare/exceptions.rb
-lib/declare/scope.rb
-lib/declare/category.rb
 lib/declare/singletonclass.rb
 lib/declare/main.rb
+lib/declare/dsl/basic.rb
+lib/declare/dsl/assertions.rb
+lib/declare/dsl/scope.rb
 examples/successfull.rb
-examples/failuers.rb
+examples/fail.rb
 examples/mixed.rb
+examples/technote.rb

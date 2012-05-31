@@ -1,3 +1,9 @@
+=== 0.0.3 2012-06-01
+
+* Add:
+  * Compatibility under Ruby 1.9.2
+  * Report fromat to markdown like
+
 === 0.0.2 2012-05-31
 
 * Add:
