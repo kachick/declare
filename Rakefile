@@ -7,7 +7,7 @@ Hoe.plugin :newgem
 $hoe = Hoe.spec 'declare' do
   developer 'Kenichi Kamiya', 'kachick1+ruby@gmail.com'
   self.rubyforge_name       = name
-  require_ruby_version '>= 1.9.3'
+  require_ruby_version '>= 1.9.2'
   dependency 'yard', '~> 0.8.1', :development
 end
 
