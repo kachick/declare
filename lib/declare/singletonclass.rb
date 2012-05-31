@@ -6,10 +6,12 @@ module Declare
   @unexpected_failures = {}
   @categories = {}
   @failures = {}
-  @scope = nil
-  @scope_counter, @pass_counter, @declare_counter = 0, 0, 0, 0
+  @scope_summaries = []
+  @pass_counter, @declare_counter = 0, 0
       
   class << self
+    
+    ScopeSummary = Struct.new :target, :description, :caller_entry, :nesting_level
     
     def unexpected_failure_in_the(scoped, exception, _caller)
       @unexpected_failures[scoped] = [exception, _caller]
@@ -19,16 +21,15 @@ module Declare
       title = title.to_s
       raise DupulicatedCategoryError if @categories.has_key? title
 
-      @categories[title] = Category.new
+      @categories[title] = DSL::Basic.new
     end
     
     def declared!
       @declare_counter += 1
     end
 
-    def scope!(scope, _caller)
-      @scope_counter += 1
-      @scope = "#{scope.inspect} (#{_caller.slice(/\A(.+?:\d+)/, 1)})"
+    def scope!(target, caller_entry, description=nil)
+      @scope_summaries << ScopeSummary.new(target, description, caller_entry, caller_entry.block_level)
     end
 
     def pass!
@@ -36,17 +37,18 @@ module Declare
     end
     
     def failure!(report)
-      @failures[@scope] ||= []
-      @failures[@scope] << report
+      @failures[@scope_summaries.last] ||= []
+      @failures[@scope_summaries.last] << report
     end
 
     def report
       unless @failures.empty?
-        puts '# Below points are not satisfied some conditions.'
-        puts
+        header = 'Below definitions are not satisfied some conditions.'
+        puts header
+        puts '=' * header.length
 
         @failures.each_pair do |scope, lines|
-          puts "## #{scope.inspect}"
+          puts "##{'#' * scope.nesting_level} #{scope.target.inspect} ##{'#' * scope.nesting_level} [#{scope.caller_entry.file_name}:#{scope.caller_entry.line_number}]"
 
           lines.each do |line|
             puts "  * #{line}"
@@ -57,7 +59,7 @@ module Declare
         puts '-' * 76
       end
 
-      puts "#{@categories.length} categorizies, #{@scope_counter} scopes, #{@declare_counter} behaviors"
+      puts "#{@categories.length} categorizies, #{@scope_summaries.length} scopes, #{@declare_counter} behaviors"
       puts " Unexpected Failers: #{@unexpected_failures.inspect}" unless @unexpected_failures.empty?
       puts "    pass: #{@pass_counter}"
       puts "    fail: #{@failures.values.flatten.length}"

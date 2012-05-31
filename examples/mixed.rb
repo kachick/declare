@@ -16,24 +16,22 @@ require '../lib/declare'
 
 Declare do
   
-  on Person.new('John') do
-    
-    # OK section
-    
+  The Person.new('John') do
+
     respond :name
     respond :birth
-    a        Person
-    kind     Object
+    a Person
+    kind Object
     
     NOT 'Taro'
     
-    on it.name do
+    The it.name do
       
       kind String
   
     end
 
-    on it.birth do
+    The it.birth do
       
       kind Time
       
@@ -41,10 +39,8 @@ Declare do
 
     truthy it.name.kind_of?(String)
     falthy it.name.match(/[1-9]/)
-    
-    # NG section
-    
-    on it.name do
+  
+    The it.name do
       
       is 'Taro'
     
@@ -56,10 +52,10 @@ Declare do
 end
 
 =begin
-# Below points are not satisfied some conditions.
-
-## "\"John\" (filename.rb:47)"
-  * "It's euqualy value with "Taro" under bidirectical #== method.", but failed. (filename.rb:49:in `block (3 levels) in <main>')
+Below definitions are not satisfied some conditions.
+====================================================
+### "John" ### [mixed.rb:43]
+  * "It's euqualy value with "Taro" under bidirectical #== method.", but MISMATCHED. [mixed.rb:45]
 
 ----------------------------------------------------------------------------
 1 categorizies, 4 scopes, 10 behaviors

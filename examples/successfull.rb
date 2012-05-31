@@ -4,7 +4,7 @@ require_relative '../lib/declare'
 
 Declare do
 
-  on(Array) {
+  The(Array) {
     
     a       Class
     kind    Module
