@@ -31,7 +31,7 @@ Declare do
     respond :to_str
     
     RESCUE SyntaxError do
-      raise SyntaxError
+      raise
     end
     
     CATCH RuntimeError do
