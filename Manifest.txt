@@ -8,7 +8,8 @@ lib/declare/version.rb
 lib/declare/exceptions.rb
 lib/declare/singletonclass.rb
 lib/declare/main.rb
-lib/declare/dsl/basic.rb
+lib/declare/dsl/callerentry.rb
+lib/declare/dsl/basicscope.rb
 lib/declare/dsl/assertions.rb
 lib/declare/dsl/scope.rb
 examples/successfull.rb

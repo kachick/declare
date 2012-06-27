@@ -1,22 +1,20 @@
 # Copyright (C) 2012 Kenichi Kamiya
 
-require_relative 'basic'
+require_relative 'basicscope'
 require_relative 'assertions'
 
-module Declare::DSL
+module Declare; module DSL
 
-  class Scope < Basic
+  class Scope < BasicScope
     
     include Assertions
     
-    attr_reader :target
+    attr_reader :it
     
     def initialize(object)
-      @target = object
+      @it = object
     end
-    
-    alias_method :it, :target
 
   end
   
-end
+end; end

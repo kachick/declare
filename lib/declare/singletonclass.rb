@@ -21,7 +21,7 @@ module Declare
       title = title.to_s
       raise DupulicatedCategoryError if @categories.has_key? title
 
-      @categories[title] = DSL::Basic.new
+      @categories[title] = DSL::BasicScope.new
     end
     
     def declared!

@@ -27,7 +27,7 @@ A unit testing framework with tiny DSL.
 
     Declare do
 
-      on(Array) {
+      The(Array) {
         
         a       Class
         kind    Module
@@ -35,7 +35,7 @@ A unit testing framework with tiny DSL.
         
       }
 
-      on(1) {
+      The(1) {
         
         is      1.0
         is      1.to_r
@@ -78,7 +78,7 @@ A unit testing framework with tiny DSL.
         kind    Hash
         respond :to_str
         
-        on(it.new) {
+        The(it.new) {
 
           a Hash
           
@@ -87,7 +87,7 @@ A unit testing framework with tiny DSL.
         
       }
 
-      on(1) {
+      The(1) {
         
         is      1.1
         is      2
@@ -158,7 +158,7 @@ A unit testing framework with tiny DSL.
 
     Declare do
       
-      The Person.new('John') do
+      The Person.new('John') do |john|
 
         respond :name
         respond :birth
@@ -167,28 +167,17 @@ A unit testing framework with tiny DSL.
         
         NOT 'Taro'
         
-        The it.name do
-          
+        The john.name do |name|
           kind String
-      
-        end
-
-        The it.birth do
-          
-          kind Time
-          
-        end
-
-        truthy it.name.kind_of?(String)
-        falthy it.name.match(/[1-9]/)
-      
-        The it.name do
-          
           is 'Taro'
-        
+          truthy name.kind_of?(String)
+          falthy name.match(/[1-9]/)
         end
-        
-        
+
+        The john.birth do
+          kind Time
+        end
+
       end
       
     end
@@ -197,36 +186,13 @@ A unit testing framework with tiny DSL.
 
     Below definitions are not satisfied some conditions.
     ====================================================
-    ### "John" ### [mixed.rb:43]
-      * "It's equaly value with "Taro" under bidirectical #== method.", but MISMATCHED. [mixed.rb:45]
+    ### "John" ### [mixed.rb:28]
+      * "It's euqualy value with "Taro" under bidirectical #== method.", but MISMATCHED. [mixed.rb:30]
 
     ----------------------------------------------------------------------------
-    1 categorizies, 4 scopes, 10 behaviors
+    1 categorizies, 3 scopes, 10 behaviors
         pass: 9
         fail: 1
-
-=== TechNote
-
-    Declare do   # start to declare with categorizing text or nothing with :)
-      
-      # This block is going to be evaluated in Declare::DSL::Basic
-      # "it" was undefined
-      
-      The Person do
-        
-        # This block is going to be evaluated in Declare::DSL::Scope
-        # "it" is point to the "Person class"
-
-        The it.new('John') do
-        
-          # This block is going to be evaluated in Declare::DSL::Scope
-          # "it" is point to the "John"
-
-        end
-        
-      end
-      
-    end
 
 === MoreAPI
 

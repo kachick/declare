@@ -1,3 +1,11 @@
+=== 0.0.4 2012-06-27
+
+* Add:
+  * BlockParameter into DSL scopes (alias to "it")
+
+* Del:
+  * #Focus, #on
+
 === 0.0.3 2012-06-01
 
 * Add:

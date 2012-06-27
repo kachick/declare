@@ -12,7 +12,7 @@ Declare do
     
   }
 
-  on(1) {
+  The(1) {
     
     is      1.0
     is      1.to_r

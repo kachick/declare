@@ -4,13 +4,13 @@ require_relative '../lib/declare'
 
 Declare do
 
-  on(Array) {
+  The(Array) {
     
     a       Module
     kind    Hash
     respond :to_str
     
-    on(it.new) {
+    The(it.new) {
 
       a Hash
       
@@ -19,7 +19,7 @@ Declare do
     
   }
 
-  on(1) {
+  The(1) {
     
     is      1.1
     is      2
@@ -31,7 +31,7 @@ Declare do
     respond :to_str
     
     RESCUE SyntaxError do
-      raise
+      raise SyntaxError
     end
     
     CATCH RuntimeError do

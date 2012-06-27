@@ -16,7 +16,7 @@ require '../lib/declare'
 
 Declare do
   
-  The Person.new('John') do
+  The Person.new('John') do |john|
 
     respond :name
     respond :birth
@@ -25,28 +25,17 @@ Declare do
     
     NOT 'Taro'
     
-    The it.name do
-      
+    The john.name do |name|
       kind String
-  
-    end
-
-    The it.birth do
-      
-      kind Time
-      
-    end
-
-    truthy it.name.kind_of?(String)
-    falthy it.name.match(/[1-9]/)
-  
-    The it.name do
-      
       is 'Taro'
-    
+      truthy name.kind_of?(String)
+      falthy name.match(/[1-9]/)
     end
-    
-    
+
+    The john.birth do
+      kind Time
+    end
+
   end
   
 end
@@ -54,11 +43,11 @@ end
 =begin
 Below definitions are not satisfied some conditions.
 ====================================================
-### "John" ### [mixed.rb:43]
-  * "It's euqualy value with "Taro" under bidirectical #== method.", but MISMATCHED. [mixed.rb:45]
+### "John" ### [mixed.rb:28]
+  * "It's euqualy value with "Taro" under bidirectical #== method.", but MISMATCHED. [mixed.rb:30]
 
 ----------------------------------------------------------------------------
-1 categorizies, 4 scopes, 10 behaviors
+1 categorizies, 3 scopes, 10 behaviors
     pass: 9
     fail: 1
 =end

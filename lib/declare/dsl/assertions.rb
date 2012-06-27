@@ -1,12 +1,12 @@
 # Copyright (C) 2012 Kenichi Kamiya
 
-module Declare::DSL
+module Declare; module DSL
 
   module Assertions
 
     # @param [Class] klass
     def A?(klass)
-      @target.instance_of? klass
+      @it.instance_of? klass
     end
     
     alias_method :a?, :A?
@@ -16,7 +16,7 @@ module Declare::DSL
       if A? klass
         pass
       else
-        failure called_from, "It's instance of #{klass}", "Real is instance of #{@target.class}."
+        failure called_from, "It's instance of #{klass}", "Real is instance of #{@it.class}."
       end
     ensure
       _declared!
@@ -25,7 +25,7 @@ module Declare::DSL
     alias_method :a, :A
 
     def KIND?(family)
-      @target.kind_of? family
+      @it.kind_of? family
     end
     
     alias_method :kind?, :KIND?
@@ -44,11 +44,11 @@ module Declare::DSL
 
     # true if can use for hash-key
     def HASHABLE?(sample)
-      sample = sample.nil? ? @target : sample
+      sample = sample.nil? ? @it : sample
       
       (bidirectical? :eql?, sample) && 
-      (@target.hash == sample.hash) &&
-      ({@target => true}.has_key? sample)
+      (@it.hash == sample.hash) &&
+      ({@it => true}.has_key? sample)
     end
     
     alias_method :hashable?, :HASHABLE?
@@ -86,8 +86,8 @@ module Declare::DSL
 
     def NOT?(other)
       (bidirectical? :!=, other) && 
-      (!(@target == other)) &&
-      (!(other == @target))
+      (!(@it == other)) &&
+      (!(other == @it))
     end
     
     alias_method :not?, :NOT?
@@ -104,7 +104,7 @@ module Declare::DSL
     
     # @param [#===] condition
     def MATCH?(condition)
-      condition === @target
+      condition === @it
     end
 
     alias_method :match?, :MATCH?
@@ -128,14 +128,14 @@ module Declare::DSL
 
     # true if bidirectical passed #equal, and __id__ is same value
     def EQUAL?(other)
-      (bidirectical? :equal?, other) && (@target.__id__ == other.__id__)
+      (bidirectical? :equal?, other) && (@it.__id__ == other.__id__)
     end
     
     def EQUAL(other)
       if EQUAL? other
         pass
       else
-        failure called_from, "It's same object/identififer with #{other.inspect}(ID: #{other.__id__}).", "Real is #{@target.inspect}(ID: #{@target.__id__})"
+        failure called_from, "It's same object/identififer with #{other.inspect}(ID: #{other.__id__}).", "Real is #{@it.inspect}(ID: #{@it.__id__})"
       end
     ensure
       _declared!
@@ -145,7 +145,7 @@ module Declare::DSL
 
     # true if under "respond_to?"
     def RESPOND?(message)
-      @target.respond_to? message
+      @it.respond_to? message
     end
 
     alias_method :respond?, :RESPOND?
@@ -231,7 +231,7 @@ module Declare::DSL
     private
 
     def bidirectical?(comparison, other)
-      (@target.__send__ comparison, other) && (other.__send__ comparison, @target)
+      (@it.__send__ comparison, other) && (other.__send__ comparison, @it)
     end
     
     def _declared!
@@ -247,9 +247,9 @@ module Declare::DSL
     end
     
     def failure_baisc(called_from, declared, real=nil)
-      ::Declare.failure! "#{@target.inspect} is declared \"#{declared}\", but failed. #{real}[#{called_from}]"
+      ::Declare.failure! "#{@it.inspect} is declared \"#{declared}\", but failed. #{real}[#{called_from}]"
     end
     
   end
   
-end
+end; end
