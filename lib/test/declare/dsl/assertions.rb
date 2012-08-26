@@ -18,6 +18,10 @@ module Test; module Declare; module DSL
       else
         failure called_from, "It's instance of #{klass}", "Real is instance of #{@it.class}."
       end
+
+      define_method :"test_#{klass.name}_#{rand(999)}" do
+        assert_same true, A?(klass)
+      end
     ensure
       _declared!
     end

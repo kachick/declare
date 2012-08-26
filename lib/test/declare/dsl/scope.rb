@@ -5,9 +5,11 @@ require_relative 'assertions'
 
 module Test; module Declare; module DSL
 
-  class Scope < BasicScope
-    
-    include Assertions
+  module Scope
+
+    include BasicScope
+    extend BasicScope
+    extend Assertions
     
     attr_reader :it
     

@@ -1,5 +1,6 @@
 # Copyright (C) 2012 Kenichi Kamiya
 
+require 'test/unit'
 
 module Test; module Declare
 
@@ -21,7 +22,17 @@ module Test; module Declare
       title = title.to_s
       raise DupulicatedCategoryError if @categories.has_key? title
 
-      @categories[title] = DSL::BasicScope.new
+      klass = Class.new Test::Unit::TestCase do
+
+        extend DSL::BasicScope
+        include DSL::BasicScope
+
+      end
+
+      Kernel.const_set :TEST_BAR, klass
+      @categories[title] = klass
+      
+      
     end
     
     def declared!
