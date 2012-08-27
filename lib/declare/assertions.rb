@@ -1,6 +1,4 @@
-# Copyright (C) 2012 Kenichi Kamiya
-
-module Declare; module DSL
+module Declare
 
   module Assertions
 
@@ -10,19 +8,20 @@ module Declare; module DSL
     end
     
     alias_method :a?, :A?
-    
+
     # @param [Class] klass
     def A(klass)
       if A? klass
         pass
       else
-        failure called_from, "It's instance of #{klass}", "Real is instance of #{@it.class}."
+        failure _declare_called_from, "It's instance of #{klass}", "Real is instance of #{@it.class}."
       end
     ensure
       _declared!
     end
     
     alias_method :a, :A
+    alias_method :is_a, :A
 
     def KIND?(family)
       @it.kind_of? family
@@ -34,14 +33,15 @@ module Declare; module DSL
       if KIND? family
         pass
       else
-        failure called_from, "It's family of #{family.inspect}"
+        failure _declare_called_from, "It's family of #{family.inspect}"
       end
     ensure
       _declared!
     end
     
     alias_method :kind, :KIND
-
+    alias_method :kind_of, :KIND
+    
     # true if can use for hash-key
     def HASHABLE?(sample)
       sample = sample.nil? ? @it : sample
@@ -57,7 +57,7 @@ module Declare; module DSL
       if HASHABLE? sample
         pass
       else
-        failure called_from, 'It\'s able to use key in any Hash object.'
+        failure _declare_called_from, 'It\'s able to use key in any Hash object.'
       end
     ensure
       _declared!
@@ -76,7 +76,7 @@ module Declare; module DSL
       if IS? other
         pass
       else
-        failure called_from, "It\'s equaly value with #{other.inspect} under bidirectical #== method."
+        failure _declare_called_from, "It\'s equaly value with #{other.inspect} under bidirectical #== method."
       end
     ensure
       _declared!
@@ -96,7 +96,7 @@ module Declare; module DSL
       if NOT? other
         pass
       else
-        failure called_from, "It isn't #{other.inspect}."
+        failure _declare_called_from, "It isn't #{other.inspect}."
       end
     ensure
       _declared!
@@ -116,7 +116,7 @@ module Declare; module DSL
       if MATCH? condition
         pass
       else
-        failure called_from, "It satisfies a condition under #{condition.inspect}."
+        failure _declare_called_from, "It satisfies a condition under #{condition.inspect}."
       end
     ensure
       _declared!
@@ -135,7 +135,7 @@ module Declare; module DSL
       if EQUAL? other
         pass
       else
-        failure called_from, "It's same object/identififer with #{other.inspect}(ID: #{other.__id__}).", "Real is #{@it.inspect}(ID: #{@it.__id__})"
+        failure _declare_called_from, "It's same object/identififer with #{other.inspect}(ID: #{other.__id__}).", "Real is #{@it.inspect}(ID: #{@it.__id__})"
       end
     ensure
       _declared!
@@ -154,7 +154,7 @@ module Declare; module DSL
       if RESPOND? message
         pass
       else
-        failure called_from, "It can behave the order ##{message}."
+        failure _declare_called_from, "It can behave the order ##{message}."
       end
     ensure
       _declared!
@@ -172,13 +172,14 @@ module Declare; module DSL
       if TRUTHY? object
         pass
       else
-        failure called_from, "\"#{object.inspect}\" is a truthy one."
+        failure _declare_called_from, "\"#{object.inspect}\" is a truthy one."
       end
     ensure
       _declared!
     end
     
     alias_method :truthy, :TRUTHY
+    alias_method 
  
     def FALTHY?(object)
       ! object
@@ -190,7 +191,7 @@ module Declare; module DSL
       if FALTHY? object
         pass
       else
-        failure called_from, "\"#{object.inspect}\" is a falthy one."
+        failure _declare_called_from, "\"#{object.inspect}\" is a falthy one."
       end
     ensure
       _declared!
@@ -205,9 +206,9 @@ module Declare; module DSL
     rescue exception_klass
       pass
     rescue ::Exception
-      failure called_from(1), "It raises a exception kind of #{exception_klass}.", "Real is faced another exception the #{$!.class}."
+      failure _declare_called_from(1), "It raises a exception kind of #{exception_klass}.", "Real is faced another exception the #{$!.class}."
     else
-      failure called_from(1), "It raises a exception kind of #{exception_klass}.", "Real is not faced any exceptions."
+      failure _declare_called_from(1), "It raises a exception kind of #{exception_klass}.", "Real is not faced any exceptions."
     ensure
       _declared!
     end
@@ -220,10 +221,10 @@ module Declare; module DSL
       if $!.instance_of? exception_klass
         pass
       else
-        failure called_from(1), "It raises the exception #{exception_klass}.", "Real is faced another exception the #{$!.class}."
+        failure _declare_called_from(1), "It raises the exception #{exception_klass}.", "Real is faced another exception the #{$!.class}."
       end
     else
-      failure called_from(1), "It raises the exception #{exception_klass}.", "Real is not faced any exceptions."
+      failure _declare_called_from(1), "It raises the exception #{exception_klass}.", "Real is not faced any exceptions."
     ensure
       _declared!
     end
@@ -242,14 +243,14 @@ module Declare; module DSL
       ::Declare.pass!
     end
     
-    def failure(called_from, declared, real=nil)
-      ::Declare.failure! "\"#{declared}\", but MISMATCHED. #{real}[#{called_from}]"
+    def failure(_declare_called_from, declared, real=nil)
+      ::Declare.failure! "\"#{declared}\", but MISMATCHED. #{real}[#{_declare_called_from}]"
     end
     
-    def failure_baisc(called_from, declared, real=nil)
-      ::Declare.failure! "#{@it.inspect} is declared \"#{declared}\", but failed. #{real}[#{called_from}]"
+    def failure_baisc(_declare_called_from, declared, real=nil)
+      ::Declare.failure! "#{@it.inspect} is declared \"#{declared}\", but failed. #{real}[#{_declare_called_from}]"
     end
     
   end
   
-end; end
+end

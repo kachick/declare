@@ -2,8 +2,8 @@
 
 require_relative 'declare/version'
 require_relative 'declare/exceptions'
-require_relative 'declare/singletonclass'
-require_relative 'declare/main'
-require_relative 'declare/dsl/basicscope'
-require_relative 'declare/dsl/assertions'
-require_relative 'declare/dsl/scope'
+require_relative 'declare/singleton_class'
+require_relative 'declare/assertions'
+require_relative 'declare/callerentry'
+require_relative 'declare/scope'
+require_relative 'declare/core_ext'

@@ -1,15 +1,14 @@
-# Copyright (C) 2012 Kenichi Kamiya
-
-
 module Declare
 
   @unexpected_failures = {}
-  @categories = {}
   @failures = {}
   @scope_summaries = []
-  @pass_counter, @declare_counter = 0, 0
+  @pass_counter = 0
+  @declare_counter = 0
       
   class << self
+    
+    attr_reader :failures
     
     ScopeSummary = Struct.new :target, :description, :caller_entry, :nesting_level
     
@@ -17,11 +16,8 @@ module Declare
       @unexpected_failures[scoped] = [exception, _caller]
     end
     
-    def new_category(title)
-      title = title.to_s
-      raise DupulicatedCategoryError if @categories.has_key? title
-
-      @categories[title] = DSL::BasicScope.new
+    def new_scope(target, &block)
+      Scope.new(target).instance_exec(target, &block)
     end
     
     def declared!
@@ -43,26 +39,27 @@ module Declare
 
     def report
       unless @failures.empty?
-        header = 'Below definitions are not satisfied some conditions.'
+        header = 'Declare report'
         puts header
         puts '=' * header.length
+        puts
 
         @failures.each_pair do |scope, lines|
           puts "##{'#' * scope.nesting_level} #{scope.target.inspect} ##{'#' * scope.nesting_level} [#{scope.caller_entry.file_name}:#{scope.caller_entry.line_number}]"
-
-          lines.each do |line|
-            puts "  * #{line}"
-          end
+          puts
+          puts lines.map{|l|"* #{l}"}
           puts
         end
         
-        puts '-' * 76
+        puts '-' * 78
       end
 
-      puts "#{@categories.length} categorizies, #{@scope_summaries.length} scopes, #{@declare_counter} behaviors"
+      puts "#{@scope_summaries.length} scopes, #{@declare_counter} behaviors"
       puts " Unexpected Failers: #{@unexpected_failures.inspect}" unless @unexpected_failures.empty?
       puts "    pass: #{@pass_counter}"
       puts "    fail: #{@failures.values.flatten.length}"
+      
+      exit @failures.length
     end
     
   end

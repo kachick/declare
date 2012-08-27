@@ -1,6 +1,4 @@
-# Copyright (C) 2012 Kenichi Kamiya
-
-module Declare; module DSL
+module Declare
   
   CallerEntry = Struct.new :file_name, :line_number, :method_name, :block_level do
     
@@ -26,4 +24,4 @@ module Declare; module DSL
     
   end
 
-end; end
+end

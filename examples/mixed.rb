@@ -14,31 +14,31 @@ end
 
 require '../lib/declare'
 
-Declare do
+The Person.new('John') do |john|
+
+  respond :name
+  respond :birth
+  a Person
+  kind Object
   
-  The Person.new('John') do |john|
-
-    respond :name
-    respond :birth
-    a Person
-    kind Object
-    
-    NOT 'Taro'
-    
-    The john.name do |name|
-      kind String
-      is 'Taro'
-      truthy name.kind_of?(String)
-      falthy name.match(/[1-9]/)
-    end
-
-    The john.birth do
-      kind Time
-    end
-
+  NOT 'Taro'
+  
+  The john.name do |name|
+    kind String
+    is 'Taro'
+    truthy name.kind_of?(String)
+    falthy name.match(/[1-9]/)
   end
-  
+
+  The john.birth do
+    kind Time
+    kind String
+  end
+
 end
+
+Declare.report
+
 
 =begin
 Below definitions are not satisfied some conditions.
