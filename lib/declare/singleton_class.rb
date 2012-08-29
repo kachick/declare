@@ -39,19 +39,26 @@ module Declare
 
     def report
       unless @failures.empty?
-        header = 'Declare report'
-        puts header
-        puts '=' * header.length
-        puts
+        top_header = 'Detail'
+        puts top_header
+        puts '=' * top_header.length, nil
 
         @failures.each_pair do |scope, lines|
-          puts "##{'#' * scope.nesting_level} #{scope.target.inspect} ##{'#' * scope.nesting_level} [#{scope.caller_entry.file_name}:#{scope.caller_entry.line_number}]"
-          puts
+          header = (
+            case scope.nesting_level
+            when 1
+              obj_header = "#{scope.target.inspect} [#{scope.caller_entry.file_name}:#{scope.caller_entry.line_number}]"
+              "#{obj_header}\n#{'-' * obj_header.length}"
+            when 2..5
+              "##{'#' * scope.nesting_level} #{scope.target.inspect} ##{'#' * scope.nesting_level} [#{scope.caller_entry.file_name}:#{scope.caller_entry.line_number}]"
+            else
+              raise 'nest too deep'
+            end
+          )
+          puts header, nil
           puts lines.map{|l|"* #{l}"}
           puts
         end
-        
-        puts '-' * 78
       end
   
       puts 'Total'

@@ -16,10 +16,10 @@ require '../lib/declare'
 
 The Person.new('John') do |john|
 
-  respond :name
-  respond :birth
-  a Person
-  kind Object
+  can :name
+  can :birth
+  is_a Person
+  kind_of Object
   
   NOT 'Taro'
   
@@ -31,7 +31,7 @@ The Person.new('John') do |john|
   end
 
   The john.birth do
-    kind Time
+    kind_of Time
   end
 
 end
