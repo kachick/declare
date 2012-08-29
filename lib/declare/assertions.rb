@@ -254,12 +254,8 @@ module Declare
       ::Declare.pass!
     end
     
-    def failure(_declare_called_from, declared, real=nil)
-      ::Declare.failure! "\"#{declared}\", but MISMATCHED. #{real}[#{_declare_called_from}]"
-    end
-    
-    def failure_baisc(_declare_called_from, declared, real=nil)
-      ::Declare.failure! "#{@it.inspect} is declared \"#{declared}\", but failed. #{real}[#{_declare_called_from}]"
+    def failure(_declare_called_from, ecpected, actual=false)
+      ::Declare.failure! "#{_declare_called_from}\n  Expected: #{ecpected}\n  Actual  : #{actual}\n\n"
     end
     
   end

@@ -69,14 +69,20 @@ Report
 Declare report
 ==============
 
-### "John" ### [mixed.rb:28]
+## "John" ## [mixed.rb:26]
 
-* "It's euqualy value with "Taro" under bidirectical #== method.", but MISMATCHED. [mixed.rb:30]
+* mixed.rb:28
+  Expected: It's equaly value with "Taro" under bidirectical #== method.
+  Actual  : false
 
-----------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+Total
+=====
+
 3 scopes, 10 behaviors
-    pass: 9
-    fail: 1
+pass: 9
+fail: 1
 ```
 
 Requirements
