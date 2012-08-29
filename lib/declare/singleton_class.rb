@@ -53,13 +53,17 @@ module Declare
         
         puts '-' * 78
       end
-
+  
+      puts 'Total'
+      puts '=====', nil
+      failure_count = @failures.values.flatten.length
+  
       puts "#{@scope_summaries.length} scopes, #{@declare_counter} behaviors"
       puts " Unexpected Failers: #{@unexpected_failures.inspect}" unless @unexpected_failures.empty?
-      puts "    pass: #{@pass_counter}"
-      puts "    fail: #{@failures.values.flatten.length}"
+      puts "pass: #{@pass_counter}"
+      puts "fail: #{failure_count}"
       
-      exit @failures.length
+      exit failure_count
     end
     
   end
