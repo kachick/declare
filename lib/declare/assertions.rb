@@ -21,7 +21,8 @@ module Declare
     end
     
     alias_method :a, :A
-    alias_method :is_a, :A
+    alias_method :IS_A, :A
+    alias_method :is_a, :IS_A
 
     def KIND?(family)
       @it.kind_of? family
@@ -40,8 +41,9 @@ module Declare
     end
     
     alias_method :kind, :KIND
-    alias_method :kind_of, :KIND
-    
+    alias_method :KIND_OF, :KIND
+    alias_method :kind_of, :KIND_OF
+
     # true if can use for hash-key
     def HASHABLE?(sample)
       sample = sample.nil? ? @it : sample
@@ -64,7 +66,9 @@ module Declare
     end
 
     alias_method :hashable, :HASHABLE
-
+    alias_method :EQL, :HASHABLE
+    alias_method :eql, :EQL
+    
     # true if under "=="
     def IS?(other)
       bidirectical? :==, other
@@ -142,7 +146,9 @@ module Declare
     end
     
     alias_method :equal, :EQUAL
-
+    alias_method :SAME, :EQUAL
+    alias_method :same, :SAME
+    
     # true if under "respond_to?"
     def RESPOND?(message)
       @it.respond_to? message
@@ -161,6 +167,8 @@ module Declare
     end
     
     alias_method :respond, :RESPOND
+    alias_method :CAN, :RESPOND
+    alias_method :can, :CAN
  
     def TRUTHY?(object)
       !! object
@@ -179,7 +187,8 @@ module Declare
     end
     
     alias_method :truthy, :TRUTHY
-    alias_method 
+    alias_method :OK, :TRUTHY
+    alias_method :ok, :OK
  
     def FALTHY?(object)
       ! object
@@ -198,7 +207,9 @@ module Declare
     end
     
     alias_method :falthy, :FALTHY
-
+    alias_method :NG, :FALTHY
+    alias_method :ng, :NG
+    
     # pass if occured the error is a own/subclassis instance
     # @param [Class] exception_klass
     def RESCUE(exception_klass, &block)
