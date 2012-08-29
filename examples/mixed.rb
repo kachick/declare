@@ -12,7 +12,7 @@ class Person
 
 end
 
-require '../lib/declare'
+require_relative '../lib/declare'
 
 The Person.new('John') do |john|
 

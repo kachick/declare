@@ -14,7 +14,7 @@ module Declare
       if A? klass
         pass
       else
-        failure _declare_called_from, "It's instance of #{klass}", "Real is instance of #{@it.class}."
+        failure "It is #{klass}'s instance.", "It is #{@it.class}'s instance."
       end
     ensure
       _declared!
@@ -34,7 +34,7 @@ module Declare
       if KIND? family
         pass
       else
-        failure _declare_called_from, "It's family of #{family.inspect}"
+        failure 0, "It's family of #{family.inspect}"
       end
     ensure
       _declared!
@@ -59,7 +59,7 @@ module Declare
       if HASHABLE? sample
         pass
       else
-        failure _declare_called_from, 'It\'s able to use key in any Hash object.'
+        failure 'It\'s able to use key in any Hash object.'
       end
     ensure
       _declared!
@@ -71,7 +71,7 @@ module Declare
     
     # true if under "=="
     def IS?(other)
-      bidirectical? :==, other
+      @it == other
     end
 
     alias_method :is?, :IS?
@@ -80,7 +80,7 @@ module Declare
       if IS? other
         pass
       else
-        failure _declare_called_from, "It\'s equaly value with #{other.inspect} under bidirectical #== method."
+        failure 'it == other', "#{@it.inspect} == #{other.inspect}"
       end
     ensure
       _declared!
@@ -100,7 +100,7 @@ module Declare
       if NOT? other
         pass
       else
-        failure _declare_called_from, "It isn't #{other.inspect}."
+        failure "It isn't #{other.inspect}."
       end
     ensure
       _declared!
@@ -117,10 +117,10 @@ module Declare
   
     # @param [#===] condition
     def MATCH(condition)
-      if MATCH? condition
+      if ret = MATCH?(condition)
         pass
       else
-        failure _declare_called_from, "It satisfies a condition under #{condition.inspect}."
+        failure "return(#{condition} === It) is not nil/false.", "return(#{ret})."
       end
     ensure
       _declared!
@@ -139,7 +139,7 @@ module Declare
       if EQUAL? other
         pass
       else
-        failure _declare_called_from, "It's same object/identififer with #{other.inspect}(ID: #{other.__id__}).", "Real is #{@it.inspect}(ID: #{@it.__id__})"
+        failure "It(ID: ) same object/identififer with #{other.inspect}(ID: #{other.__id__}).", "#{@it.inspect}(ID: #{@it.__id__})"
       end
     ensure
       _declared!
@@ -160,7 +160,7 @@ module Declare
       if RESPOND? message
         pass
       else
-        failure _declare_called_from, "It can behave the order ##{message}."
+        failure "It can behave the order ##{message}."
       end
     ensure
       _declared!
@@ -180,7 +180,7 @@ module Declare
       if TRUTHY? object
         pass
       else
-        failure _declare_called_from, "\"#{object.inspect}\" is a truthy one."
+        failure "\"#{object.inspect}\" is a truthy one."
       end
     ensure
       _declared!
@@ -200,7 +200,7 @@ module Declare
       if FALTHY? object
         pass
       else
-        failure _declare_called_from, "\"#{object.inspect}\" is a falthy one."
+        failure "\"#{object.inspect}\" is a falthy one."
       end
     ensure
       _declared!
@@ -217,9 +217,9 @@ module Declare
     rescue exception_klass
       pass
     rescue ::Exception
-      failure _declare_called_from(1), "It raises a exception kind of #{exception_klass}.", "Real is faced another exception the #{$!.class}."
+      failure "It raises a exception kind of #{exception_klass}.", "Real is faced another exception the #{$!.class}.", 2
     else
-      failure _declare_called_from(1), "It raises a exception kind of #{exception_klass}.", "Real is not faced any exceptions."
+      failure "It raises a exception kind of #{exception_klass}.", "Real is not faced any exceptions.", 2
     ensure
       _declared!
     end
@@ -232,10 +232,10 @@ module Declare
       if $!.instance_of? exception_klass
         pass
       else
-        failure _declare_called_from(1), "It raises the exception #{exception_klass}.", "Real is faced another exception the #{$!.class}."
+        failure "It raises the exception #{exception_klass}.", "Real is faced another exception the #{$!.class}.", 2
       end
     else
-      failure _declare_called_from(1), "It raises the exception #{exception_klass}.", "Real is not faced any exceptions."
+      failure "It raises the exception #{exception_klass}.", "Real is not faced any exceptions.", 2
     ensure
       _declared!
     end
@@ -254,8 +254,8 @@ module Declare
       ::Declare.pass!
     end
     
-    def failure(_declare_called_from, ecpected, actual=false)
-      ::Declare.failure! "#{_declare_called_from}\n  Expected: #{ecpected}\n  Actual  : #{actual}\n\n"
+    def failure(ecpected, actual=false, level=1)
+      ::Declare.failure! "#{_declare_called_from level}\n  Expected: #{ecpected}\n  Actual  : #{actual}\n\n"
     end
     
   end
