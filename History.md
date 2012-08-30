@@ -1,3 +1,23 @@
+0.0.5.a 2012-08-30
+==================
+
+alpha release
+
+Modify
+------
+
+* API changed
+  #The to toplevel method
+  and reports, evaluation adjusting
+
+0.0.4.1 2012-08-30
+================
+
+Fix
+---
+
+* Adjust to return code, for outer shells
+
 0.0.4 2012-06-27
 ================
 
