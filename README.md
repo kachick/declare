@@ -50,8 +50,8 @@ The Person.new('John') do |john|
   The john.name do |name|
     kind_of String
     is_a 'Taro'
-    truthy name.kind_of?(String)
-    falthy name.match(/[1-9]/)
+    ok name.kind_of?(String)
+    ng name.match(/[1-9]/)
   end
 
   The john.birth do
@@ -66,23 +66,26 @@ Declare.report
 Report
 
 ```markdown
-Declare report
-==============
+Detail
+======
 
-## "John" ## [mixed.rb:26]
+"John" [mixed.rb:26]
+--------------------
 
 * mixed.rb:28
-  Expected: It's equaly value with "Taro" under bidirectical #== method.
-  Actual  : false
+  Expected: it == other
+  Actual  : "John" == "Taro"
 
-
-------------------------------------------------------------------------------
 Total
 =====
 
 3 scopes, 10 behaviors
 pass: 9
 fail: 1
+```
+
+```shell
+$ echo $? #=> 1(count of failed behaviors)
 ```
 
 Requirements

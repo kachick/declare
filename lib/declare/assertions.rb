@@ -4,7 +4,9 @@ module Declare
 
     # @param [Class] klass
     def A?(klass)
-      @it.instance_of? klass
+      raise TypeError unless klass.kind_of?(Class)
+
+      @it.instance_of?(klass) && (@it.class == klass)
     end
     
     alias_method :a?, :A?
@@ -47,11 +49,8 @@ module Declare
     alias_method :kind_of, :KIND_OF
 
     # true if can use for hash-key
-    def HASHABLE?(sample)
-      sample = sample.nil? ? @it : sample
-      
-      (bidirectical? :eql?, sample) && 
-      (@it.hash == sample.hash) &&
+    def HASHABLE?(sample=@it.dup) 
+      @it.eql?(sample) && sample.eql?(@it) && (@it.hash == sample.hash) &&
       ({@it => true}.has_key? sample)
     end
     
@@ -72,8 +71,8 @@ module Declare
     alias_method :eql, :EQL
     
     # true if under "=="
-    def IS?(other)
-      @it == other
+    def IS?(other, bidirectical=true)
+      (@it == other) && (bidirectical ? (other == @it) : true)
     end
 
     alias_method :is?, :IS?
@@ -92,9 +91,7 @@ module Declare
     alias_method :is, :IS
 
     def NOT?(other)
-      (bidirectical? :!=, other) && 
-      (!(@it == other)) &&
-      (!(other == @it))
+      (@it != other) && (other != @it) && !(IS?(other))
     end
     
     alias_method :not?, :NOT?
@@ -137,7 +134,6 @@ module Declare
 
     # true if bidirectical passed #equal, and __id__ is same value
     def EQUAL?(other)
-      (bidirectical? :equal?, other) && (@it.__id__ == other.__id__)
       @it.equal?(other) && other.equal?(@it) && (@it.__id__.equal? other.__id__)
     end
     
@@ -244,21 +240,17 @@ module Declare
       if $!.instance_of? exception_klass
         pass
       else
-        failure("It raises the exception #{exception_klass}.",
-                "Real is faced another exception the #{$!.class}.", 2)
+        failure("Faced a exception, that instance of #{exception_klass}.",
+                "Faced a exception, that instance of #{$!.class}.", 2)
       end
     else
-      failure("It raises the exception #{exception_klass}.",
-              "Real is not faced any exceptions.", 2)
+      failure("Faced a exception, that instance of #{exception_klass}.",
+              'The block was not faced any exceptions.', 2)
     ensure
       _declared!
     end
 
     private
-
-    def bidirectical?(comparison, other)
-      (@it.__send__ comparison, other) && (other.__send__ comparison, @it)
-    end
     
     def _declared!
       ::Declare.declared!
