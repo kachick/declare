@@ -3,22 +3,16 @@ $VERBOSE = true
 require_relative '../lib/declare'
 
 The(Array) {
-  
   a       Module
   kind    Hash
   respond :to_str
   
   The(it.new) {
-
     a Hash
-    
   }
-
-  
 }
 
 The(1) {
-  
   is      1.1
   is      2
   NOT     1
@@ -35,7 +29,6 @@ The(1) {
   CATCH RuntimeError do
     raise Exception
   end
-  
 }
 
 Declare.report
