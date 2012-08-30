@@ -49,15 +49,13 @@ module Declare
     alias_method :kind_of, :KIND_OF
 
     # true if can use for hash-key
-    def HASHABLE?(sample=@it.dup) 
+    def EQL?(sample) 
       @it.eql?(sample) && sample.eql?(@it) && (@it.hash == sample.hash) &&
       ({@it => true}.has_key? sample)
     end
     
-    alias_method :hashable?, :HASHABLE?
-    
-    def HASHABLE(sample=nil)
-      if HASHABLE? sample
+    def EQL(sample)
+      if EQL? sample
         pass
       else
         failure 'It\'s able to use key in any Hash object.'
@@ -66,8 +64,6 @@ module Declare
       _declared!
     end
 
-    alias_method :hashable, :HASHABLE
-    alias_method :EQL, :HASHABLE
     alias_method :eql, :EQL
     
     # true if under "=="

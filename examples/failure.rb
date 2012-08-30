@@ -21,6 +21,14 @@ The(1) {
   kind    Float
   a       Integer
   respond :to_str
+
+  The it.succ do
+    is 9
+
+    The it.succ do
+      is 200
+    end
+  end
   
   RESCUE SyntaxError do
     raise

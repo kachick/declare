@@ -17,7 +17,7 @@ The(1) {
   NOT     2
   match   1..3
   equal   1
-  hashable
+  eql     1
   kind    Integer
   a       Fixnum
   respond :upto

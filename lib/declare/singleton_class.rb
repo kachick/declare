@@ -46,11 +46,11 @@ module Declare
         @failures.each_pair do |scope, lines|
           header = (
             case scope.nesting_level
-            when 1
+            when 0
               obj_header = "#{scope.target.inspect} [#{scope.caller_entry.file_name}:#{scope.caller_entry.line_number}]"
               "#{obj_header}\n#{'-' * obj_header.length}"
-            when 2..5
-              "##{'#' * scope.nesting_level} #{scope.target.inspect} ##{'#' * scope.nesting_level} [#{scope.caller_entry.file_name}:#{scope.caller_entry.line_number}]"
+            when 1..4
+              "###{'#' * scope.nesting_level} #{scope.target.inspect} ###{'#' * scope.nesting_level} [#{scope.caller_entry.file_name}:#{scope.caller_entry.line_number}]"
             else
               raise 'nest too deep'
             end

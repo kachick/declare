@@ -10,7 +10,14 @@ module Declare
       def parse(caller_entry)
         if /\A(.+?):(\d+)(?::in `(.*)')?/ =~ caller_entry
           file_name, line_number, method_name = $1, $2.to_i, $3
-          block_level = /block \((\d+) levels\)/ =~ method_name ? $1.to_i : 1
+          block_level = case method_name
+                        when /block \((\d+) levels\)/
+                          $1.to_i
+                        when /block/
+                          1
+                        else
+                          0
+                        end
           
           new file_name, line_number, method_name, block_level
         else

@@ -3,6 +3,8 @@ LICENSE
 History.md
 Manifest.txt
 Rakefile
+Gemfile
+declare.gemspec
 lib/declare.rb
 lib/declare/version.rb
 lib/declare/exceptions.rb
