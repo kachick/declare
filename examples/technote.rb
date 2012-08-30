@@ -9,24 +9,17 @@ class Person
 
 end
 
-require '../lib/declare'
-
-Declare do   # start to declare with categorizing text or nothing with :)
+require_relative '../lib/declare'
   
-  # This block is going to be evaluated in Declare::DSL::Basic
-  # "it" was undefined
+The Person do
   
-  The Person do
-    
-    # This block is going to be evaluated in Declare::DSL::Scope
-    # "it" is point to the "Person class"
+  # This block is going to be evaluated in Declare::Scope
+  # "it" is point to the "Person"
 
-    The it.new('John') do
+  The it.new('John') do
     
-      # This block is going to be evaluated in Declare::DSL::Scope
-      # "it" is point to the "John"
-
-    end
+    # This block is going to be evaluated in Declare::Scope
+    # "it" is point to the "John, who is instance of Person"
     
   end
   
