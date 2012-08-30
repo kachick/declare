@@ -1,28 +1,31 @@
-# Copyright (C) 2012 Kenichi Kamiya
-
-module Declare; module DSL
+module Declare
 
   module Assertions
 
     # @param [Class] klass
     def A?(klass)
-      @it.instance_of? klass
+      raise TypeError unless klass.kind_of?(Class)
+
+      @it.instance_of?(klass) && (@it.class == klass)
     end
     
     alias_method :a?, :A?
-    
+
     # @param [Class] klass
     def A(klass)
       if A? klass
         pass
       else
-        failure called_from, "It's instance of #{klass}", "Real is instance of #{@it.class}."
+        failure("It is #{klass}'s instance.",
+                "It is #{@it.class}'s instance.")
       end
     ensure
       _declared!
     end
     
     alias_method :a, :A
+    alias_method :IS_A, :A
+    alias_method :is_a, :IS_A
 
     def KIND?(family)
       @it.kind_of? family
@@ -34,40 +37,38 @@ module Declare; module DSL
       if KIND? family
         pass
       else
-        failure called_from, "It's family of #{family.inspect}"
+        failure("It is kind of #{family.inspect}.",
+                (family.kind_of?(Module) ? "It.class(#{@it.class}) <-> other.ancestors(#{family.ancestors})" : "It is not kind of #{family.inspect}"))
       end
     ensure
       _declared!
     end
     
     alias_method :kind, :KIND
+    alias_method :KIND_OF, :KIND
+    alias_method :kind_of, :KIND_OF
 
     # true if can use for hash-key
-    def HASHABLE?(sample)
-      sample = sample.nil? ? @it : sample
-      
-      (bidirectical? :eql?, sample) && 
-      (@it.hash == sample.hash) &&
+    def EQL?(sample) 
+      @it.eql?(sample) && sample.eql?(@it) && (@it.hash == sample.hash) &&
       ({@it => true}.has_key? sample)
     end
     
-    alias_method :hashable?, :HASHABLE?
-    
-    def HASHABLE(sample=nil)
-      if HASHABLE? sample
+    def EQL(sample)
+      if EQL? sample
         pass
       else
-        failure called_from, 'It\'s able to use key in any Hash object.'
+        failure 'It\'s able to use key in any Hash object.'
       end
     ensure
       _declared!
     end
 
-    alias_method :hashable, :HASHABLE
-
+    alias_method :eql, :EQL
+    
     # true if under "=="
-    def IS?(other)
-      bidirectical? :==, other
+    def IS?(other, bidirectical=true)
+      (@it == other) && (bidirectical ? (other == @it) : true)
     end
 
     alias_method :is?, :IS?
@@ -76,7 +77,8 @@ module Declare; module DSL
       if IS? other
         pass
       else
-        failure called_from, "It\'s equaly value with #{other.inspect} under bidirectical #== method."
+        failure('it == other',
+                "#{@it.inspect} == #{other.inspect}")
       end
     ensure
       _declared!
@@ -85,9 +87,7 @@ module Declare; module DSL
     alias_method :is, :IS
 
     def NOT?(other)
-      (bidirectical? :!=, other) && 
-      (!(@it == other)) &&
-      (!(other == @it))
+      (@it != other) && (other != @it) && !(IS?(other))
     end
     
     alias_method :not?, :NOT?
@@ -96,7 +96,8 @@ module Declare; module DSL
       if NOT? other
         pass
       else
-        failure called_from, "It isn't #{other.inspect}."
+        failure("It is not other(#{other.inspect}).",
+                "It is other(#{other.inspect}).")
       end
     ensure
       _declared!
@@ -113,10 +114,11 @@ module Declare; module DSL
   
     # @param [#===] condition
     def MATCH(condition)
-      if MATCH? condition
+      if ret = MATCH?(condition)
         pass
       else
-        failure called_from, "It satisfies a condition under #{condition.inspect}."
+        failure("return(#{condition} === It) is not nil/false.",
+                "return(#{ret}).")
       end
     ensure
       _declared!
@@ -128,21 +130,24 @@ module Declare; module DSL
 
     # true if bidirectical passed #equal, and __id__ is same value
     def EQUAL?(other)
-      (bidirectical? :equal?, other) && (@it.__id__ == other.__id__)
+      @it.equal?(other) && other.equal?(@it) && (@it.__id__.equal? other.__id__)
     end
     
     def EQUAL(other)
       if EQUAL? other
         pass
       else
-        failure called_from, "It's same object/identififer with #{other.inspect}(ID: #{other.__id__}).", "Real is #{@it.inspect}(ID: #{@it.__id__})"
+        failure("@it.equal?(other) && other.equal?(@it) && (@it.__id__.equal? other.__id__) #=> truthy",
+                "falthy, it(#{@it.__id__}), other(#{other.__id__})")
       end
     ensure
       _declared!
     end
     
     alias_method :equal, :EQUAL
-
+    alias_method :SAME, :EQUAL
+    alias_method :same, :SAME
+    
     # true if under "respond_to?"
     def RESPOND?(message)
       @it.respond_to? message
@@ -151,16 +156,21 @@ module Declare; module DSL
     alias_method :respond?, :RESPOND?
 
     def RESPOND(message)
-      if RESPOND? message
+      message = message.to_sym
+
+      if ret = RESPOND?(message)
         pass
       else
-        failure called_from, "It can behave the order ##{message}."
+        failure("It.respond_to?(#{message.inspect}) #=> truthy(not nil/false)",
+                "It.respond_to?(#{message.inspect}) #=> #{ret.inspect}")
       end
     ensure
       _declared!
     end
     
     alias_method :respond, :RESPOND
+    alias_method :CAN, :RESPOND
+    alias_method :can, :CAN
  
     def TRUTHY?(object)
       !! object
@@ -172,13 +182,15 @@ module Declare; module DSL
       if TRUTHY? object
         pass
       else
-        failure called_from, "\"#{object.inspect}\" is a truthy one."
+        failure "\"#{object.inspect}\" is a truthy(not nil/false) one."
       end
     ensure
       _declared!
     end
     
     alias_method :truthy, :TRUTHY
+    alias_method :OK, :TRUTHY
+    alias_method :ok, :OK
  
     def FALTHY?(object)
       ! object
@@ -190,14 +202,16 @@ module Declare; module DSL
       if FALTHY? object
         pass
       else
-        failure called_from, "\"#{object.inspect}\" is a falthy one."
+        failure "\"#{object.inspect}\" is a falthy(nil/false) one."
       end
     ensure
       _declared!
     end
     
     alias_method :falthy, :FALTHY
-
+    alias_method :NG, :FALTHY
+    alias_method :ng, :NG
+    
     # pass if occured the error is a own/subclassis instance
     # @param [Class] exception_klass
     def RESCUE(exception_klass, &block)
@@ -205,9 +219,11 @@ module Declare; module DSL
     rescue exception_klass
       pass
     rescue ::Exception
-      failure called_from(1), "It raises a exception kind of #{exception_klass}.", "Real is faced another exception the #{$!.class}."
+      failure("Faced a exception, that kind of #{exception_klass}.",
+              "Faced a exception, that instance of #{$!.class}.", 2)
     else
-      failure called_from(1), "It raises a exception kind of #{exception_klass}.", "Real is not faced any exceptions."
+      failure("Faced a exception, that kind of #{exception_klass}.",
+              'The block was not faced any exceptions.', 2)
     ensure
       _declared!
     end
@@ -220,19 +236,17 @@ module Declare; module DSL
       if $!.instance_of? exception_klass
         pass
       else
-        failure called_from(1), "It raises the exception #{exception_klass}.", "Real is faced another exception the #{$!.class}."
+        failure("Faced a exception, that instance of #{exception_klass}.",
+                "Faced a exception, that instance of #{$!.class}.", 2)
       end
     else
-      failure called_from(1), "It raises the exception #{exception_klass}.", "Real is not faced any exceptions."
+      failure("Faced a exception, that instance of #{exception_klass}.",
+              'The block was not faced any exceptions.', 2)
     ensure
       _declared!
     end
 
     private
-
-    def bidirectical?(comparison, other)
-      (@it.__send__ comparison, other) && (other.__send__ comparison, @it)
-    end
     
     def _declared!
       ::Declare.declared!
@@ -242,14 +256,10 @@ module Declare; module DSL
       ::Declare.pass!
     end
     
-    def failure(called_from, declared, real=nil)
-      ::Declare.failure! "\"#{declared}\", but MISMATCHED. #{real}[#{called_from}]"
-    end
-    
-    def failure_baisc(called_from, declared, real=nil)
-      ::Declare.failure! "#{@it.inspect} is declared \"#{declared}\", but failed. #{real}[#{called_from}]"
+    def failure(ecpected, actual, level=1)
+      ::Declare.failure! "#{_declare_called_from level}\n  Expected: #{ecpected}\n  Actual  : #{actual}\n\n"
     end
     
   end
   
-end; end
+end

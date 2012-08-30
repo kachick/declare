@@ -1,6 +1,3 @@
-# Copyright (C) 2012 Kenichi Kamiya
-
-
 module Declare
 
   class UnhandledError < Exception; end
