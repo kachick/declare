@@ -62,7 +62,9 @@ module Declare
       puts "#{@categories.length} categorizies, #{@scope_summaries.length} scopes, #{@declare_counter} behaviors"
       puts " Unexpected Failers: #{@unexpected_failures.inspect}" unless @unexpected_failures.empty?
       puts "    pass: #{@pass_counter}"
-      puts "    fail: #{@failures.values.flatten.length}"
+      failure_count = @failures.values.flatten.length
+      puts "    fail: #{failure_count}"
+      exit failure_count
     end
     
   end
