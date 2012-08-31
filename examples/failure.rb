@@ -21,6 +21,9 @@ The(1) {
   kind    Float
   a       Integer
   respond :to_str
+  
+  ok false
+  ng true
 
   The it.succ do
     is 9

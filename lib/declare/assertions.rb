@@ -183,7 +183,7 @@ module Declare
         pass
       else
         failure("It is a truthy(not nil/false) object.",
-                "\"#{object.inspect}\" is a falthy(nil/false) object."
+                "\"#{object.inspect}\" is a falthy(nil/false) object.")
       end
     ensure
       _declared!
@@ -204,7 +204,7 @@ module Declare
         pass
       else
         failure("It is a falthy(nil/false) object.",
-                "\"#{object.inspect}\" is a truthy(not nil/false) object."
+                "\"#{object.inspect}\" is a truthy(not nil/false) object.")
       end
     ensure
       _declared!
