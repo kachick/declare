@@ -6,7 +6,7 @@ Description
 
 A unit testing framework with tiny DSL.
 
-Futures
+Features
 --------
 
 * Simple syntax.

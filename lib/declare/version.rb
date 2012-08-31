@@ -1,5 +1,5 @@
 module Declare
 
-  VERSION = '0.0.5.a'.freeze
+  VERSION = '0.0.5.b'.freeze
 
 end
