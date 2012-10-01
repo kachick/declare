@@ -22,24 +22,21 @@ Product Code
 
 ```ruby
 class Person
-  
   attr_reader :name, :birth
   
   def initialize(name)
     @name = name
     @birth = Time.now
   end
-
 end
 ```
 
 Test Code
 
 ```ruby
-require '../lib/declare/autorun'
+require 'declare/autorun'
 
 The Person.new('John') do |john|
-
   can :name
   can :birth
   is_a Person
@@ -57,10 +54,7 @@ The Person.new('John') do |john|
   The john.birth do
     kind_of Time
   end
-
 end
-
-Declare.report
 ```
 
 Report
@@ -83,17 +77,46 @@ Detail testing report
 $ echo $? #=> 1(count of failed behaviors)
 ```
 
+### How to use in Rake Tasks likely with test/unit
+
+That's easy.
+Replace below.
+
+```ruby
+require 'test/unit'
+```
+
+to
+
+```ruby
+require 'declare/autorun'
+```
+
 Requirements
-------------
-
-* Ruby 1.9.2 or later
-
-Installation
 -------------
+
+* Ruby - [1.9.2 or later](http://travis-ci.org/#!/kachick/declare)
+
+Install
+-------
 
 ```bash
 $ gem install declare
 ```
+
+Build Status
+-------------
+
+[![Build Status](https://secure.travis-ci.org/kachick/declare.png)](http://travis-ci.org/kachick/declare)
+
+Link
+----
+
+* [code](https://github.com/kachick/declare)
+* [API](http://kachick.github.com/declare/yard/frames.html)
+* [issues](https://github.com/kachick/declare/issues)
+* [CI](http://travis-ci.org/#!/kachick/declare)
+* [gem](https://rubygems.org/gems/declare)
 
 License
 -------
