@@ -1,6 +1,6 @@
 $VERBOSE = true
 
-require_relative '../lib/declare'
+require_relative '../lib/declare/autorun'
 
 The(Array) {
   a       Module
@@ -41,5 +41,3 @@ The(1) {
     raise Exception
   end
 }
-
-Declare.report

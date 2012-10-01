@@ -36,7 +36,7 @@ end
 Test Code
 
 ```ruby
-require '../lib/declare'
+require '../lib/declare/autorun'
 
 The Person.new('John') do |john|
 
@@ -66,25 +66,20 @@ Declare.report
 Report
 
 ```markdown
-Detail
-======
+Detail testing report
+=====================
 
-"John" [mixed.rb:26]
---------------------
+### "John" ### [./example/mixed.rb:26]
 
-* mixed.rb:28
+* ./example/mixed.rb:28
   Expected: it == other
   Actual  : "John" == "Taro"
 
-Total
-=====
-
-3 scopes, 10 behaviors
-pass: 9
-fail: 1
+------------------------------------------------------------------------------
+3 scopes, 10 assertions, 1 failures
 ```
 
-```shell
+```bash
 $ echo $? #=> 1(count of failed behaviors)
 ```
 
@@ -96,13 +91,13 @@ Requirements
 Installation
 -------------
 
-```shell
+```bash
 $ gem install declare
 ```
 
 License
 -------
 
-The MIT X License  
+The MIT X11 License  
 Copyright (c) 2012 Kenichi Kamiya  
-See the file LICENSE for further details.
+See MIT-LICENSE for further details.
