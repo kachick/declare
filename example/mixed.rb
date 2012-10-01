@@ -1,6 +1,5 @@
 $VERBOSE = true
 
-
 class Person
   
   attr_reader :name, :birth
@@ -12,7 +11,7 @@ class Person
 
 end
 
-require_relative '../lib/declare'
+require_relative '../lib/declare/autorun'
 
 The Person.new('John') do |john|
 
@@ -35,5 +34,3 @@ The Person.new('John') do |john|
   end
 
 end
-
-Declare.report

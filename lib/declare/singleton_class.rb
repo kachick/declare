@@ -1,16 +1,28 @@
 module Declare
 
+  @auto_run = false
   @unexpected_failures = {}
   @failures = {}
   @scope_summaries = []
   @pass_counter = 0
   @declare_counter = 0
-      
+
   class << self
     
     attr_reader :failures
     
     ScopeSummary = Struct.new :target, :description, :caller_entry, :nesting_level
+    
+    def auto_run
+      @auto_run = true
+      at_exit do
+        report
+      end
+    end
+    
+    def auto_run?
+      @auto_run
+    end
     
     def unexpected_failure_in_the(scoped, exception, _caller)
       @unexpected_failures[scoped] = [exception, _caller]
@@ -39,40 +51,39 @@ module Declare
 
     def report
       unless @failures.empty?
-        top_header = 'Detail'
-        puts top_header
-        puts '=' * top_header.length, nil
-
-        @failures.each_pair do |scope, lines|
-          header = (
-            case scope.nesting_level
-            when 0
-              obj_header = "#{scope.target.inspect} [#{scope.caller_entry.file_name}:#{scope.caller_entry.line_number}]"
-              "#{obj_header}\n#{'-' * obj_header.length}"
-            when 1..4
-              "###{'#' * scope.nesting_level} #{scope.target.inspect} ###{'#' * scope.nesting_level} [#{scope.caller_entry.file_name}:#{scope.caller_entry.line_number}]"
-            else
-              raise 'nest too deep'
-            end
-          )
-          puts header, nil
-          puts lines.map{|l|"* #{l}"}
-          puts
-        end
+        report_detail
+        puts '-' * 78
       end
-  
-      puts 'Total'
-      puts '=====', nil
+      
       failure_count = @failures.values.flatten.length
-  
-      puts "#{@scope_summaries.length} scopes, #{@declare_counter} behaviors"
+      puts "#{@scope_summaries.length} scopes, #{@declare_counter} assertions, #{failure_count} failures"
       puts " Unexpected Failers: #{@unexpected_failures.inspect}" unless @unexpected_failures.empty?
-      puts "pass: #{@pass_counter}"
-      puts "fail: #{failure_count}"
       
       exit failure_count
     end
-    
+
+    private
+
+    def report_detail
+      top_header = 'Detail testing report'
+      puts top_header
+      puts '=' * top_header.length, nil
+
+      @failures.each_pair do |scope, lines|
+        header = (
+          case scope.nesting_level
+          when 0
+            obj_header = "#{scope.target.inspect} [#{scope.caller_entry.file_name}:#{scope.caller_entry.line_number}]"
+            "#{obj_header}\n#{'-' * obj_header.length}"
+          else
+            "###{'#' * scope.nesting_level} #{scope.target.inspect} ###{'#' * scope.nesting_level} [#{scope.caller_entry.file_name}:#{scope.caller_entry.line_number}]"
+          end
+        )
+        puts header, nil
+        puts lines.map{|l|"* #{l}"}
+      end
+    end
+
   end
 
 end
