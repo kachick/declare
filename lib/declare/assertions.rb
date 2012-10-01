@@ -217,14 +217,15 @@ module Declare
     # pass if occured the error is a own/subclassis instance
     # @param [Class] exception_klass
     def RESCUE(exception_klass, &block)
+      fmt_err = ->err_cls{err_cls.ancestors.take_while{|mod|mod != Object}.join(' < ')}
       block.call
     rescue exception_klass
       pass
     rescue ::Exception
-      failure("Faced a exception, that kind of #{exception_klass}.",
-              "Faced a exception, that instance of #{$!.class}.", 2)
+      failure("Faced a exception, that kind of #{exception_klass}(#{fmt_err.call exception_klass}).",
+              "Faced a exception, that instance of #{$!.class}(#{fmt_err.call $!.class}).", 2)
     else
-      failure("Faced a exception, that kind of #{exception_klass}.",
+      failure("Faced a exception, that kind of #{exception_klass}(#{fmt_err.call exception_klass}).",
               'The block was not faced any exceptions.', 2)
     ensure
       _declared!

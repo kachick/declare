@@ -1,6 +1,6 @@
 $VERBOSE = true
 
-require_relative '../lib/declare'
+require 'declare/autorun'
 
 The(Array) {
   
@@ -31,5 +31,3 @@ The(1) {
   end
   
 }
-
-Declare.report

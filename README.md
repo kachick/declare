@@ -22,24 +22,21 @@ Product Code
 
 ```ruby
 class Person
-  
   attr_reader :name, :birth
   
   def initialize(name)
     @name = name
     @birth = Time.now
   end
-
 end
 ```
 
 Test Code
 
 ```ruby
-require '../lib/declare'
+require 'declare/autorun'
 
 The Person.new('John') do |john|
-
   can :name
   can :birth
   is_a Person
@@ -57,52 +54,73 @@ The Person.new('John') do |john|
   The john.birth do
     kind_of Time
   end
-
 end
-
-Declare.report
 ```
 
 Report
 
 ```markdown
-Detail
-======
+Detail testing report
+=====================
 
-"John" [mixed.rb:26]
---------------------
+### "John" ### [./example/mixed.rb:26]
 
-* mixed.rb:28
+* ./example/mixed.rb:28
   Expected: it == other
   Actual  : "John" == "Taro"
 
-Total
-=====
-
-3 scopes, 10 behaviors
-pass: 9
-fail: 1
+------------------------------------------------------------------------------
+3 scopes, 10 assertions, 1 failures
 ```
 
-```shell
+```bash
 $ echo $? #=> 1(count of failed behaviors)
 ```
 
+### How to use in Rake Tasks likely with test/unit
+
+That's easy.
+Replace below.
+
+```ruby
+require 'test/unit'
+```
+
+to
+
+```ruby
+require 'declare/autorun'
+```
+
 Requirements
-------------
-
-* Ruby 1.9.2 or later
-
-Installation
 -------------
 
-```shell
+* Ruby - [1.9.2 or later](http://travis-ci.org/#!/kachick/declare)
+
+Install
+-------
+
+```bash
 $ gem install declare
 ```
+
+Build Status
+-------------
+
+[![Build Status](https://secure.travis-ci.org/kachick/declare.png)](http://travis-ci.org/kachick/declare)
+
+Link
+----
+
+* [code](https://github.com/kachick/declare)
+* [API](http://kachick.github.com/declare/yard/frames.html)
+* [issues](https://github.com/kachick/declare/issues)
+* [CI](http://travis-ci.org/#!/kachick/declare)
+* [gem](https://rubygems.org/gems/declare)
 
 License
 -------
 
-The MIT X License  
+The MIT X11 License  
 Copyright (c) 2012 Kenichi Kamiya  
-See the file LICENSE for further details.
+See MIT-LICENSE for further details.
