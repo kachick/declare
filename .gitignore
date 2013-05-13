@@ -1,8 +1,9 @@
-*.orig
 *.gem
 *.rbc
 .bundle
 .config
+.DS_Store
+.ruby-version
 coverage
 coverage.data
 InstalledFiles
@@ -13,6 +14,9 @@ spec/reports
 test/tmp
 test/version_tmp
 tmp
+
+# bundler
+vendor/
 
 # YARD artifacts
 .yardoc
@@ -26,6 +30,9 @@ doc/
 *~
 .redcar
 
-
-.DS_*
-
+# other
+*.lock
+*.bak
+tool/
+.rbx/
+*\#*
