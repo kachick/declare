@@ -99,4 +99,3 @@ class Test_Declare_Assertions < Test::Unit::TestCase
   end
   
 end
-
