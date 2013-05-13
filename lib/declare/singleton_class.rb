@@ -16,7 +16,7 @@ module Declare
     def auto_run
       @auto_run = true
       at_exit do
-        report
+        $! || report
       end
     end
     
