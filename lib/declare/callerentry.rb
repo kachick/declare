@@ -1,3 +1,5 @@
+# coding: us-ascii
+
 module Declare
   
   CallerEntry = Struct.new :file_name, :line_number, :method_name, :block_level do

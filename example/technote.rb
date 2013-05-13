@@ -1,5 +1,6 @@
-$VERBOSE = true
+# coding: us-ascii
 
+$VERBOSE = true
 
 class Person
 

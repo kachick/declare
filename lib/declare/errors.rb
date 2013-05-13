@@ -1,3 +1,5 @@
+# coding: us-ascii
+
 module Declare
 
   class UnhandledError < Exception; end

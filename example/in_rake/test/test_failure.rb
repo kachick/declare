@@ -1,3 +1,4 @@
+# coding: us-ascii
 $VERBOSE = true
 
 require 'declare/autorun'
