@@ -64,15 +64,10 @@ class Test_Declare_Assertions < Test::Unit::TestCase
   end
   
   def test_EQUAL?
-    Scope.it = 1.0
-    assert_same false, Scope.EQUAL?(1)
-    assert_same false, Scope.EQUAL?(1.0)
-    assert_same false, Scope.EQUAL?(1.1)
-    
-    Scope.it = 1
-    assert_same true, Scope.EQUAL?(1)
-    assert_same false, Scope.EQUAL?(1.0)
-    assert_same false, Scope.EQUAL?(1.1)
+    str = 'str'
+    Scope.it = str
+    assert_same false, Scope.EQUAL?('str')
+    assert_same true, Scope.EQUAL?(str)
   end
 
   def test_RESPOND?
