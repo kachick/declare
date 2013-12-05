@@ -27,17 +27,16 @@ module Declare
     
     alias_method :A, :INSTANCE_OF
     alias_method :a, :A
-    alias_method :IS_A, :A
-    alias_method :is_a, :IS_A
 
-    def KIND?(family)
+    def KIND_OF?(family)
       @it.kind_of? family
     end
     
+    alias_method :KIND?, :KIND_OF?
     alias_method :kind?, :KIND?
     
-    def KIND(family)
-      if KIND? family
+    def KIND_OF(family)
+      if KIND_OF? family
         pass
       else
         failure("It is kind of #{family.inspect}.",
@@ -47,9 +46,11 @@ module Declare
       _declared!
     end
     
-    alias_method :kind, :KIND
-    alias_method :KIND_OF, :KIND
     alias_method :kind_of, :KIND_OF
+    alias_method :KIND, :KIND_OF
+    alias_method :kind, :KIND
+    alias_method :IS_A, :KIND_OF
+    alias_method :is_a, :IS_A
 
     # true if can use for hash-key
     def EQL?(sample) 
