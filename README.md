@@ -95,7 +95,7 @@ require 'declare/autorun'
 Requirements
 -------------
 
-* Ruby - [1.9.2 or later](http://travis-ci.org/#!/kachick/declare)
+* Ruby - [1.9.3 or later](http://travis-ci.org/#!/kachick/declare)
 
 Install
 -------
