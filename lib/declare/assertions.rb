@@ -5,15 +5,17 @@ module Declare
   module Assertions
 
     # @param [Class] klass
-    def A?(klass)
+    def INSTANCE_OF?(klass)
       @it.instance_of?(klass)
     end
     
+    alias_method :A?, :INSTANCE_OF?
     alias_method :a?, :A?
 
+
     # @param [Class] klass
-    def A(klass)
-      if A? klass
+    def INSTANCE_OF(klass)
+      if INSTANCE_OF? klass
         pass
       else
         failure("It is #{klass}'s instance.",
@@ -23,6 +25,7 @@ module Declare
       _declared!
     end
     
+    alias_method :A, :INSTANCE_OF
     alias_method :a, :A
     alias_method :IS_A, :A
     alias_method :is_a, :IS_A
