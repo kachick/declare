@@ -19,11 +19,6 @@ class Test_Declare_Assertions < Test::Unit::TestCase
   def test_A?
     Scope.it = []
     assert_same true, Scope.A?(Array)
-    
-    assert_raises TypeError do
-      assert_same false, Scope.A?(Enumerable)
-    end
-    
     assert_same false, Scope.A?(Object)
   end
   

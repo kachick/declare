@@ -6,9 +6,7 @@ module Declare
 
     # @param [Class] klass
     def A?(klass)
-      raise TypeError unless klass.kind_of?(Class)
-
-      @it.instance_of?(klass) && (@it.class == klass)
+      @it.instance_of?(klass)
     end
     
     alias_method :a?, :A?
