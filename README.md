@@ -1,6 +1,10 @@
 declare
 =======
 
+[![Build Status](https://secure.travis-ci.org/kachick/declare.png)](http://travis-ci.org/kachick/declare)
+[![Gem Version](https://badge.fury.io/rb/declare.png)](http://badge.fury.io/rb/declare)
+[![Dependency Status](https://gemnasium.com/kachick/declare.svg)](https://gemnasium.com/kachick/declare)
+
 Description
 ------------
 
@@ -104,16 +108,11 @@ Install
 $ gem install declare
 ```
 
-Build Status
--------------
-
-[![Build Status](https://secure.travis-ci.org/kachick/declare.png)](http://travis-ci.org/kachick/declare)
-
 Link
 ----
 
 * [code](https://github.com/kachick/declare)
-* [API](http://kachick.github.com/declare/yard/frames.html)
+* [API](http://www.rubydoc.info/github/kachick/declare)
 * [issues](https://github.com/kachick/declare/issues)
 * [CI](http://travis-ci.org/#!/kachick/declare)
 * [gem](https://rubygems.org/gems/declare)
