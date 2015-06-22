@@ -217,7 +217,11 @@ module Declare
     alias_method :falthy, :FALTHY
     alias_method :NG, :FALTHY
     alias_method :ng, :NG
-    
+
+    def is_predicate?(predicator)
+      !!(@it.__send__ :"#{predicator}?")
+    end
+
     # pass if occured the error is a own/subclassis instance
     # @param [Class] exception_klass
     def RESCUE(exception_klass, &block)
@@ -265,6 +269,25 @@ module Declare
     
     def failure(ecpected, actual, level=1)
       ::Declare.failure! "#{_declare_called_from level}\n  Expected: #{ecpected}\n  Actual  : #{actual}\n\n"
+    end
+    
+    def method_missing(name, *args)
+      case name
+      when /\Ais_(?<predicator>.+)/i
+        predicator = $~[:predicator]
+        begin
+          if ret = is_predicate?(predicator)
+            pass
+          else
+            failure("it.#{predicator}? is truthy",
+                    "#{@it.inspect}.#{predicator}? is #{ret.inspect}")
+          end
+        ensure
+          _declared!
+        end
+      else
+        super
+      end
     end
     
   end

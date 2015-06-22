@@ -11,6 +11,10 @@ class Person
     @name = name
     @birth = Time.now
   end
+  
+  def named?
+    ! @name.empty?
+  end
 
 end
 
@@ -23,13 +27,14 @@ The Person.new('John') do |john|
   can :birth
   is_a Person
   kind_of Object
-  
+  is_named
+
   NOT 'Taro'
   
   The john.name do |name|
     kind String
     is 'Taro' # pass
-    is 'john' #fail
+    is 'john' # fail
     truthy name.kind_of?(String)
     falthy name.match(/[1-9]/)
   end
@@ -46,6 +51,6 @@ EOD
 #{CODE}
 EOD`
     assert_equal(2, $?.exitstatus)
-    assert_match(/3 scopes, 11 assertions, 2 failures/, out)
+    assert_match(/3 scopes, 12 assertions, 2 failures/, out)
   end
 end

@@ -43,7 +43,13 @@ class Test_Declare_Assertions < Test::Unit::TestCase
     assert_same true, Scope.IS?(1.0)
     assert_same false, Scope.IS?(1.1)
   end
-  
+
+  def test_is_predicate?
+    Scope.it = []
+    assert_same true, Scope.is_predicate?(:empty)
+    assert_same false, Scope.is_predicate?(:nil)
+  end
+
   def test_NOT?
     Scope.it = 1.0
     assert_same false, Scope.NOT?(1)

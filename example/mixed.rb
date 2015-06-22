@@ -10,6 +10,10 @@ class Person
     @birth = Time.now
   end
 
+  def named?
+    ! @name.empty?
+  end
+
 end
 
 require_relative '../lib/declare/autorun'
@@ -20,6 +24,7 @@ The Person.new('John') do |john|
   can :birth
   is_a Person
   kind_of Object
+  is_named
   
   NOT 'Taro'
   
