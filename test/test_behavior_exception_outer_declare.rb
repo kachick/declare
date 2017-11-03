@@ -4,9 +4,8 @@ require 'test/unit'
 class Test_Decalre_Behavior_Exception_Outer_Declare < Test::Unit::TestCase
   CODE = <<"EOD"
 class Person
-  
   attr_reader :name, :birth
-  
+
   def initialize(name)
     @name = name
     @birth = Time.now

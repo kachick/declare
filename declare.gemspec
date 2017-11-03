@@ -11,7 +11,7 @@ Gem::Specification.new do |gem|
   gem.version       = Declare::VERSION.dup
 
   gem.required_ruby_version = '>= 2.2'
-  
+
   gem.add_development_dependency 'test-unit', '>= 3.2.6', '< 4'
   gem.add_development_dependency 'yard', '>= 0.9.9', '< 2.0'
   gem.add_development_dependency 'rake', '>= 10', '< 20'
@@ -28,5 +28,4 @@ Gem::Specification.new do |gem|
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features|declare)/})
   gem.require_paths = ['lib']
-
 end

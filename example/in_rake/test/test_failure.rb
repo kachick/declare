@@ -22,7 +22,7 @@ The(1) {
   kind    Float
   a       Integer
   respond :to_str
-  
+
   ok false
   ng true
 
@@ -33,11 +33,11 @@ The(1) {
       is 200
     end
   end
-  
+
   RESCUE SyntaxError do
     raise
   end
-  
+
   CATCH RuntimeError do
     raise Exception
   end

@@ -1,7 +1,6 @@
 # coding: us-ascii
 
 module Declare
-
   @auto_run = false
   @unexpected_failures = {}
   @failures = {}
@@ -10,30 +9,29 @@ module Declare
   @declare_counter = 0
 
   class << self
-    
     attr_reader :failures
-    
+
     ScopeSummary = Struct.new :target, :description, :caller_entry, :nesting_level
-    
+
     def auto_run
       @auto_run = true
       at_exit do
         $! || report
       end
     end
-    
+
     def auto_run?
       @auto_run
     end
-    
+
     def unexpected_failure_in_the(scoped, exception, _caller)
       @unexpected_failures[scoped] = [exception, _caller]
     end
-    
+
     def new_scope(target, &block)
       Scope.new(target).instance_exec(target, &block)
     end
-    
+
     def declared!
       @declare_counter += 1
     end
@@ -45,7 +43,7 @@ module Declare
     def pass!
       @pass_counter += 1
     end
-    
+
     def failure!(report)
       @failures[@scope_summaries.last] ||= []
       @failures[@scope_summaries.last] << report
@@ -56,11 +54,11 @@ module Declare
         report_detail
         puts '-' * 78
       end
-      
+
       failure_count = @failures.values.flatten.length
       puts "#{@scope_summaries.length} scopes, #{@declare_counter} assertions, #{failure_count} failures"
       puts " Unexpected Failers: #{@unexpected_failures.inspect}" unless @unexpected_failures.empty?
-      
+
       exit failure_count
     end
 
@@ -85,7 +83,5 @@ module Declare
         puts lines.map{|l|"* #{l}"}
       end
     end
-
   end
-
 end
