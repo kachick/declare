@@ -10,15 +10,15 @@ Gem::Specification.new do |gem|
   gem.name          = 'declare'
   gem.version       = Declare::VERSION.dup
 
-  gem.required_ruby_version = '>= 1.9.3'
+  gem.required_ruby_version = '>= 2.2'
   
-  gem.add_development_dependency 'test-unit', '>= 3.1.1', '< 4'
-  gem.add_development_dependency 'yard', '>= 0.8.7.6', '< 0.9'
+  gem.add_development_dependency 'test-unit', '>= 3.2.6', '< 4'
+  gem.add_development_dependency 'yard', '>= 0.9.9', '< 2.0'
   gem.add_development_dependency 'rake', '>= 10', '< 20'
   gem.add_development_dependency 'bundler', '>= 1.10', '< 2'
 
   if RUBY_ENGINE == 'rbx'
-    gem.add_dependency 'rubysl', '~> 2.1'
+    gem.add_dependency 'rubysl', '>= 2.2'
   end
 
   # common
