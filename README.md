@@ -26,7 +26,7 @@ Product Code
 ```ruby
 class Person
   attr_reader :name, :birth
-  
+
   def initialize(name)
     @name = name
     @birth = Time.now
@@ -44,9 +44,9 @@ The Person.new('John') do |john|
   can :birth
   is_a Person
   kind_of Object
-  
+
   NOT 'Taro'
-  
+
   The john.name do |name|
     kind_of String
     is_a 'Taro'

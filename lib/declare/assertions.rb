@@ -1,14 +1,12 @@
 # coding: us-ascii
 
 module Declare
-
   module Assertions
-
     # @param [Class] klass
     def INSTANCE_OF?(klass)
       @it.instance_of?(klass)
     end
-    
+
     alias_method :A?, :INSTANCE_OF?
     alias_method :a?, :A?
 
@@ -24,17 +22,17 @@ module Declare
     ensure
       _declared!
     end
-    
+
     alias_method :A, :INSTANCE_OF
     alias_method :a, :A
 
     def KIND_OF?(family)
       @it.kind_of? family
     end
-    
+
     alias_method :KIND?, :KIND_OF?
     alias_method :kind?, :KIND?
-    
+
     def KIND_OF(family)
       if KIND_OF? family
         pass
@@ -45,7 +43,7 @@ module Declare
     ensure
       _declared!
     end
-    
+
     alias_method :kind_of, :KIND_OF
     alias_method :KIND, :KIND_OF
     alias_method :kind, :KIND
@@ -57,7 +55,7 @@ module Declare
       @it.eql?(sample) && sample.eql?(@it) && (@it.hash == sample.hash) &&
       ({@it => true}.has_key? sample)
     end
-    
+
     def EQL(sample)
       if EQL? sample
         pass
@@ -69,14 +67,14 @@ module Declare
     end
 
     alias_method :eql, :EQL
-    
+
     # true if under "=="
     def IS?(other, bidirectical=true)
       (@it == other) && (bidirectical ? (other == @it) : true)
     end
 
     alias_method :is?, :IS?
-    
+
     def IS(other)
       if IS? other
         pass
@@ -93,9 +91,9 @@ module Declare
     def NOT?(other)
       (@it != other) && (other != @it) && !(IS?(other))
     end
-    
+
     alias_method :not?, :NOT?
-    
+
     def NOT(other)
       if NOT? other
         pass
@@ -106,7 +104,7 @@ module Declare
     ensure
       _declared!
     end
-    
+
     # @param [#===] condition
     def MATCH?(condition)
       condition === @it
@@ -115,7 +113,7 @@ module Declare
     alias_method :match?, :MATCH?
     alias_method :SATISFY?, :MATCH?
     alias_method :satisfy?, :SATISFY?
-  
+
     # @param [#===] condition
     def MATCH(condition)
       if ret = MATCH?(condition)
@@ -127,7 +125,7 @@ module Declare
     ensure
       _declared!
     end
-    
+
     alias_method :match, :MATCH
     alias_method :SATISFY, :MATCH
     alias_method :satisfy, :SATISFY
@@ -136,7 +134,7 @@ module Declare
     def EQUAL?(other)
       @it.equal?(other) && other.equal?(@it) && (@it.__id__.equal? other.__id__)
     end
-    
+
     def EQUAL(other)
       if EQUAL? other
         pass
@@ -147,11 +145,11 @@ module Declare
     ensure
       _declared!
     end
-    
+
     alias_method :equal, :EQUAL
     alias_method :SAME, :EQUAL
     alias_method :same, :SAME
-    
+
     # true if under "respond_to?"
     def RESPOND?(message)
       @it.respond_to? message
@@ -171,11 +169,11 @@ module Declare
     ensure
       _declared!
     end
-    
+
     alias_method :respond, :RESPOND
     alias_method :CAN, :RESPOND
     alias_method :can, :CAN
- 
+
     def TRUTHY?(object)
       !! object
     end
@@ -192,11 +190,11 @@ module Declare
     ensure
       _declared!
     end
-    
+
     alias_method :truthy, :TRUTHY
     alias_method :OK, :TRUTHY
     alias_method :ok, :OK
- 
+
     def FALTHY?(object)
       ! object
     end
@@ -213,11 +211,11 @@ module Declare
     ensure
       _declared!
     end
-    
+
     alias_method :falthy, :FALTHY
     alias_method :NG, :FALTHY
     alias_method :ng, :NG
-    
+
     # pass if occured the error is a own/subclassis instance
     # @param [Class] exception_klass
     def RESCUE(exception_klass, &block)
@@ -234,7 +232,7 @@ module Declare
     ensure
       _declared!
     end
-    
+
     # pass if occured the error is just a own instance
     # @param [Class] exception_klass
     def CATCH(exception_klass, &block)
@@ -254,19 +252,17 @@ module Declare
     end
 
     private
-    
+
     def _declared!
       ::Declare.declared!
     end
-    
+
     def pass
       ::Declare.pass!
     end
-    
+
     def failure(ecpected, actual, level=1)
       ::Declare.failure! "#{_declare_called_from level}\n  Expected: #{ecpected}\n  Actual  : #{actual}\n\n"
     end
-    
   end
-  
 end
