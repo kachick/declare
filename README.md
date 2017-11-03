@@ -3,7 +3,6 @@ declare
 
 [![Build Status](https://secure.travis-ci.org/kachick/declare.png)](http://travis-ci.org/kachick/declare)
 [![Gem Version](https://badge.fury.io/rb/declare.png)](http://badge.fury.io/rb/declare)
-[![Dependency Status](https://gemnasium.com/kachick/declare.svg)](https://gemnasium.com/kachick/declare)
 
 Description
 ------------
@@ -99,7 +98,7 @@ require 'declare/autorun'
 Requirements
 -------------
 
-* Ruby - [1.9.3 or later](http://travis-ci.org/#!/kachick/declare)
+* Ruby - [2.2 or later](http://travis-ci.org/#!/kachick/declare)
 
 Install
 -------
