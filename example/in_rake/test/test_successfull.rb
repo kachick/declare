@@ -16,8 +16,8 @@ The(1) {
   match   1..3
   equal   1
   eql     1
-  kind    Integer
-  a       Fixnum
+  kind    Numeric
+  a       Integer
   respond :upto
 
   RESCUE Exception do

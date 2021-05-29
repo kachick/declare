@@ -1,4 +1,5 @@
 # coding: us-ascii
+# frozen_string_literal: true
 
 module Declare
   @auto_run = false

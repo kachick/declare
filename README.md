@@ -1,13 +1,13 @@
 declare
 =======
 
-[![Build Status](https://secure.travis-ci.org/kachick/declare.png)](http://travis-ci.org/kachick/declare)
+![Build Status](https://github.com/kachick/declare/actions/workflows/test_behaviors.yml/badge.svg?branch=main)
 [![Gem Version](https://badge.fury.io/rb/declare.png)](http://badge.fury.io/rb/declare)
 
 Description
 ------------
 
-A unit testing framework with tiny DSL.
+A unit testing framework
 
 Features
 --------
@@ -18,6 +18,24 @@ Features
 
 Usage
 -----
+
+Require Ruby 2.5 or later
+
+Add below code into your `library`'s gemspec
+
+```ruby
+Gem::Specification.new do |gem|
+  gem.add_development_dependency 'declare', '>= 0.2.0', '< 0.3.0'
+end
+```
+
+Or add below into your `application`'s `Gemfile`
+
+```ruby
+group :test do
+  gem 'declare', '>= 0.2.0', '< 0.3.0'
+end
+```
 
 ### Overview
 
@@ -76,14 +94,14 @@ Detail testing report
 3 scopes, 10 assertions, 1 failures
 ```
 
-```bash
-$ echo $? #=> 1(count of failed behaviors)
+```console
+$ echo $?
+1(count of failed behaviors)
 ```
 
-### How to use in Rake Tasks likely with test/unit
+### How to use in Rake Tasks likely with test-unit
 
-That's easy.
-Replace below.
+Replace as below.
 
 ```ruby
 require 'test/unit'
@@ -94,31 +112,3 @@ to
 ```ruby
 require 'declare/autorun'
 ```
-
-Requirements
--------------
-
-* Ruby - [2.2 or later](http://travis-ci.org/#!/kachick/declare)
-
-Install
--------
-
-```bash
-$ gem install declare
-```
-
-Link
-----
-
-* [code](https://github.com/kachick/declare)
-* [API](http://www.rubydoc.info/github/kachick/declare)
-* [issues](https://github.com/kachick/declare/issues)
-* [CI](http://travis-ci.org/#!/kachick/declare)
-* [gem](https://rubygems.org/gems/declare)
-
-License
--------
-
-The MIT X11 License  
-Copyright (c) 2012 Kenichi Kamiya  
-See MIT-LICENSE for further details.

@@ -1,4 +1,5 @@
 # coding: us-ascii
+# frozen_string_literal: true
 
 module Declare
   module Assertions
@@ -51,7 +52,7 @@ module Declare
     alias_method :is_a, :IS_A
 
     # true if can use for hash-key
-    def EQL?(sample) 
+    def EQL?(sample)
       @it.eql?(sample) && sample.eql?(@it) && (@it.hash == sample.hash) &&
       ({@it => true}.has_key? sample)
     end
@@ -69,8 +70,8 @@ module Declare
     alias_method :eql, :EQL
 
     # true if under "=="
-    def IS?(other, bidirectical=true)
-      (@it == other) && (bidirectical ? (other == @it) : true)
+    def IS?(other, bidirectional: true)
+      (@it == other) && (bidirectional ? (other == @it) : true)
     end
 
     alias_method :is?, :IS?
@@ -89,7 +90,7 @@ module Declare
     alias_method :is, :IS
 
     def NOT?(other)
-      (@it != other) && (other != @it) && !(IS?(other))
+      (@it != other) && (other != @it) && !IS?(other)
     end
 
     alias_method :not?, :NOT?
@@ -130,7 +131,7 @@ module Declare
     alias_method :SATISFY, :MATCH
     alias_method :satisfy, :SATISFY
 
-    # true if bidirectical passed #equal, and __id__ is same value
+    # true if bidirectional passed #equal, and __id__ is same value
     def EQUAL?(other)
       @it.equal?(other) && other.equal?(@it) && (@it.__id__.equal? other.__id__)
     end
@@ -175,7 +176,7 @@ module Declare
     alias_method :can, :CAN
 
     def TRUTHY?(object)
-      !! object
+      !!object
     end
 
     alias_method :truthy?, :TRUTHY?
@@ -220,7 +221,7 @@ module Declare
     # @param [Class] exception_klass
     def RESCUE(exception_klass, &block)
       fmt_err = ->err_cls{err_cls.ancestors.take_while{|mod|mod != Object}.join(' < ')}
-      block.call
+      yield
     rescue exception_klass
       pass
     rescue ::Exception
@@ -233,10 +234,10 @@ module Declare
       _declared!
     end
 
-    # pass if occured the error is just a own instance
+    # pass if occurred the error is just a own instance
     # @param [Class] exception_klass
     def CATCH(exception_klass, &block)
-      block.call
+      yield
     rescue ::Exception
       if $!.instance_of? exception_klass
         pass
@@ -261,8 +262,8 @@ module Declare
       ::Declare.pass!
     end
 
-    def failure(ecpected, actual, level=1)
-      ::Declare.failure! "#{_declare_called_from level}\n  Expected: #{ecpected}\n  Actual  : #{actual}\n\n"
+    def failure(expected, actual, level=1)
+      ::Declare.failure! "#{_declare_called_from level}\n  Expected: #{expected}\n  Actual  : #{actual}\n\n"
     end
   end
 end

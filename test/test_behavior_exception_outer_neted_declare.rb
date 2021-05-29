@@ -1,8 +1,10 @@
 # coding: us-ascii
-require 'test/unit'
+# frozen_string_literal: true
+
+require_relative 'helper'
 
 class Test_Decalre_Behavior_Exception_Outer_NestedDeclare < Test::Unit::TestCase
-  CODE = <<"EOD"
+  CODE = <<"RUBY"
 class Person
   attr_reader :name, :birth
 
@@ -25,12 +27,12 @@ The Person.new('John') do |john|
 
   raise Exception
 end
-EOD
+RUBY
 
   def test_result
-    out = `ruby -w 2>&1 <<EOD
+    out = `ruby -w 2>&1 <<RUBY_CDE
 #{CODE}
-EOD
+RUBY_CODE
 `
     assert_equal(1, $?.exitstatus)
     assert_match(/Exception/, out)

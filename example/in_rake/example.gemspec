@@ -3,19 +3,16 @@ Gem::Specification.new do |gem|
   gem.email         = ['foo@example.com']
   gem.description   = %q{:)}
   gem.summary       = %q{:)}
-  gem.homepage      = 'https://github.com/kachick/declare'
+  gem.homepage      = 'https://github.com/your_name/your_awesome_gem'
 
   gem.files         = `git ls-files`.split($\)
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
-  gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
-  gem.name          = 'example'
+  gem.name          = 'your_awesome_gem'
   gem.require_paths = ['lib']
   gem.version       = '0.0.1'
 
-  gem.required_ruby_version = '>= 2.2'
+  gem.required_ruby_version = '>= 2.5'
 
   gem.add_development_dependency 'declare'
   gem.add_development_dependency 'rake'
-  gem.add_development_dependency 'bundler'
 end
 
