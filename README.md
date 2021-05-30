@@ -5,33 +5,21 @@
 
 A unit testing framework
 
-* Simple syntax
-* Markdown looks Reports
-* Tiny keyboard typings :)
-
 ## Usage
 
 Require Ruby 2.5 or later
 
-Add below code into your `library`'s gemspec
-
-```ruby
-Gem::Specification.new do |gem|
-  gem.add_development_dependency 'declare', '>= 0.2.0', '< 0.3.0'
-end
-```
-
-Or add below into your `application`'s `Gemfile`
+Add below code into your Gemfile`
 
 ```ruby
 group :test do
-  gem 'declare', '>= 0.2.0', '< 0.3.0'
+  gem 'declare', '>= 0.3.0', '< 0.4.0'
 end
 ```
 
 ### Overview
 
-Product Code
+Target Code
 
 ```ruby
 class Person
@@ -49,23 +37,25 @@ Test Code
 ```ruby
 require 'declare/autorun'
 
-The Person.new('John') do |john|
-  can :name
-  can :birth
-  is_a Person
-  kind_of Object
+Declare.describe do
+  The Person.new('John') do |john|
+    can :name
+    can :birth
+    is_a Person
+    kind_of Object
 
-  NOT 'Taro'
+    NOT 'Taro'
 
-  The john.name do |name|
-    kind_of String
-    is_a 'Taro'
-    ok name.kind_of?(String)
-    ng name.match(/[1-9]/)
-  end
+    The john.name do |name|
+      kind_of String
+      is_a Person
+      ok name.kind_of?(String)
+      ng name.match(/[1-9]/)
+    end
 
-  The john.birth do
-    kind_of Time
+    The john.birth do
+      kind_of Time
+    end
   end
 end
 ```
@@ -76,9 +66,9 @@ Report
 Detail testing report
 =====================
 
-### "John" ### [./example/mixed.rb:26]
+### "John" ### [./example/mixed.rb:25]
 
-* ./example/mixed.rb:28
+* ./example/mixed.rb:27
   Expected: it == other
   Actual  : "John" == "Taro"
 
@@ -88,7 +78,7 @@ Detail testing report
 
 ```console
 $ echo $?
-1(count of failed behaviors)
+1(count of the failures)
 ```
 
 ### How to use in Rake Tasks likely with test-unit
