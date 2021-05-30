@@ -73,7 +73,7 @@ module Declare
           end
         )
         puts header, nil
-        puts lines.map { |l| "* #{l}" }
+        puts(lines.map { |l| "* #{l}" })
       end
     end
   end
