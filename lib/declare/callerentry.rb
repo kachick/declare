@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 module Declare
-  CallerEntry = Struct.new(:file_name, :line_number, :method_name, :block_level) do
+  CallerEntry = Struct.new(:file_name, :line_number, :method_name, :block_level, keyword_init: true) do
     class << self
       # @param [String] caller_entry
       # @return [CallerEntry]
@@ -20,7 +20,7 @@ module Declare
                           0
                         end
 
-          new(matched[:file_name], Integer(matched[:line_number]), matched[:method_name], block_level)
+          new(file_name: matched[:file_name], line_number: Integer(matched[:line_number]), method_name: matched[:method_name], block_level: block_level)
         else
           raise TypeError, caller_entry
         end

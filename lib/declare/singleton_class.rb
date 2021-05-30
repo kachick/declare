@@ -12,7 +12,7 @@ module Declare
   class << self
     attr_reader :failures
 
-    ScopeSummary = Struct.new(:target, :description, :caller_entry, :nesting_level)
+    ScopeSummary = Struct.new(:target, :description, :caller_entry, :nesting_level, keyword_init: true)
 
     def auto_run
       @auto_run = true
@@ -30,7 +30,7 @@ module Declare
     end
 
     def scope!(target, caller_entry, description=nil)
-      @scope_summaries << ScopeSummary.new(target, description, caller_entry, caller_entry.block_level)
+      @scope_summaries << ScopeSummary.new(target: target, description: description, caller_entry: caller_entry, nesting_level: caller_entry.block_level)
     end
 
     def pass!
