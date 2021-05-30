@@ -1,4 +1,5 @@
 # coding: us-ascii
+# frozen_string_literal: true
 $VERBOSE = true
 
 require 'declare/autorun'
@@ -16,8 +17,8 @@ The(1) {
   match   1..3
   equal   1
   eql     1
-  kind    Integer
-  a       Fixnum
+  kind    Numeric
+  a       Integer
   respond :upto
 
   RESCUE Exception do

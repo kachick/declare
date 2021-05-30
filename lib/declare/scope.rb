@@ -1,4 +1,5 @@
 # coding: us-ascii
+# frozen_string_literal: true
 
 require_relative 'assertions'
 
@@ -11,7 +12,5 @@ module Declare
     def initialize(target)
       @it = target
     end
-
-    alias_method :_caller, :caller
   end
 end

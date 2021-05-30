@@ -1,8 +1,12 @@
 # coding: us-ascii
-require 'test/unit'
+# frozen_string_literal: true
+
+require_relative 'helper'
 
 class Test_Decalre_Behavior_Mixed < Test::Unit::TestCase
-  CODE = <<"EOD"
+  include DeclareHelpers
+
+  CODE = <<"RUBY"
 class Person
   attr_reader :name, :birth
 
@@ -12,7 +16,7 @@ class Person
   end
 end
 
-app_dir = "#{File.expand_path('..', File.dirname(__FILE__))}"
+app_dir = "#{File.expand_path('..', __dir__)}"
 require app_dir + '/lib/declare/autorun'
 
 The Person.new('John') do |john|
@@ -28,20 +32,18 @@ The Person.new('John') do |john|
     is 'Taro' # pass
     is 'john' #fail
     truthy name.kind_of?(String)
-    falthy name.match(/[1-9]/)
+    falsy name.match(/[1-9]/)
   end
 
   The john.birth do
     kind_of Time
   end
 end
-EOD
+RUBY
 
   def test_result
-    out = `ruby -w 2>&1 <<EOD
-#{CODE}
-EOD`
-    assert_equal(2, $?.exitstatus)
-    assert_match(/3 scopes, 11 assertions, 2 failures/, out)
+    result = execute_ruby_code_in_other_process(CODE)
+    assert_match(/3 scopes, 11 assertions, 2 failures/, result.all_output)
+    assert_equal(2, result.exitstatus)
   end
 end

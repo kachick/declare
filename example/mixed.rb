@@ -1,4 +1,5 @@
 # coding: us-ascii
+# frozen_string_literal: true
 $VERBOSE = true
 
 class Person
@@ -25,7 +26,7 @@ The Person.new('John') do |john|
     kind String
     is 'Taro'
     truthy name.kind_of?(String)
-    falthy name.match(/[1-9]/)
+    falsy name.match(/[1-9]/)
   end
 
   The john.birth do

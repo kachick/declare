@@ -1,4 +1,5 @@
 # coding: us-ascii
+# frozen_string_literal: true
 
 module Declare
   @auto_run = false
@@ -11,7 +12,7 @@ module Declare
   class << self
     attr_reader :failures
 
-    ScopeSummary = Struct.new :target, :description, :caller_entry, :nesting_level
+    ScopeSummary = Struct.new(:target, :description, :caller_entry, :nesting_level, keyword_init: true)
 
     def auto_run
       @auto_run = true
@@ -20,14 +21,7 @@ module Declare
       end
     end
 
-    def auto_run?
-      @auto_run
-    end
-
-    def unexpected_failure_in_the(scoped, exception, _caller)
-      @unexpected_failures[scoped] = [exception, _caller]
-    end
-
+    # @return [Scope]
     def new_scope(target, &block)
       Scope.new(target).instance_exec(target, &block)
     end
@@ -37,7 +31,7 @@ module Declare
     end
 
     def scope!(target, caller_entry, description=nil)
-      @scope_summaries << ScopeSummary.new(target, description, caller_entry, caller_entry.block_level)
+      @scope_summaries << ScopeSummary.new(target: target, description: description, caller_entry: caller_entry, nesting_level: caller_entry.block_level)
     end
 
     def pass!
@@ -59,7 +53,7 @@ module Declare
       puts "#{@scope_summaries.length} scopes, #{@declare_counter} assertions, #{failure_count} failures"
       puts " Unexpected Failers: #{@unexpected_failures.inspect}" unless @unexpected_failures.empty?
 
-      exit failure_count
+      exit(failure_count)
     end
 
     private
@@ -80,7 +74,7 @@ module Declare
           end
         )
         puts header, nil
-        puts lines.map{|l|"* #{l}"}
+        puts(lines.map { |l| "* #{l}" })
       end
     end
   end
