@@ -1,23 +1,15 @@
-declare
-=======
+# declare
 
 ![Build Status](https://github.com/kachick/declare/actions/workflows/test_behaviors.yml/badge.svg?branch=main)
 [![Gem Version](https://badge.fury.io/rb/declare.png)](http://badge.fury.io/rb/declare)
 
-Description
-------------
-
 A unit testing framework
 
-Features
---------
-
-* Simple syntax.
-* Markdown looks Reports.
+* Simple syntax
+* Markdown looks Reports
 * Tiny keyboard typings :)
 
-Usage
------
+## Usage
 
 Require Ruby 2.5 or later
 
@@ -112,3 +104,8 @@ to
 ```ruby
 require 'declare/autorun'
 ```
+
+## Links
+
+* [Repository](https://github.com/kachick/declare)
+* [API documents](https://kachick.github.io/declare)
