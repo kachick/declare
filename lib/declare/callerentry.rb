@@ -6,7 +6,6 @@ module Declare
     class << self
       # @param [String] caller_entry
       # @return [CallerEntry]
-      # reference: http://doc.ruby-lang.org/ja/1.9.3/class/Kernel.html
       def parse(caller_entry)
         matched = /\A(?<file_name>.+?):(?<line_number>\d+)(?::in `(?<method_name>.*)')?/.match(caller_entry)
         if matched
