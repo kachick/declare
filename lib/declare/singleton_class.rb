@@ -21,6 +21,7 @@ module Declare
       end
     end
 
+    # @return [Scope]
     def new_scope(target, &block)
       Scope.new(target).instance_exec(target, &block)
     end

@@ -27,6 +27,7 @@ module Declare
       end
     end
 
+    # @return [String]
     def to_s
       "#{file_name}:#{line_number}"
     end
