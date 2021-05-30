@@ -25,7 +25,7 @@ The Person.new('John') do |john|
     kind String
     is 'Taro'
     truthy name.kind_of?(String)
-    falthy name.match(/[1-9]/)
+    falsy name.match(/[1-9]/)
   end
 
   The john.birth do

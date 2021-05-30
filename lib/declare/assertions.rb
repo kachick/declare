@@ -141,7 +141,7 @@ module Declare
         pass
       else
         failure("@it.equal?(other) && other.equal?(@it) && (@it.__id__.equal? other.__id__) #=> truthy",
-                "falthy, it(#{@it.__id__}), other(#{other.__id__})")
+                "falsy, it(#{@it.__id__}), other(#{other.__id__})")
       end
     ensure
       _declared!
@@ -186,7 +186,7 @@ module Declare
         pass
       else
         failure("It is a truthy(not nil/false) object.",
-                "\"#{object.inspect}\" is a falthy(nil/false) object.")
+                "\"#{object.inspect}\" is a falsy(nil/false) object.")
       end
     ensure
       _declared!
@@ -196,25 +196,25 @@ module Declare
     alias_method :OK, :TRUTHY
     alias_method :ok, :OK
 
-    def FALTHY?(object)
+    def FALSY?(object)
       ! object
     end
 
-    alias_method :falthy?, :FALTHY?
+    alias_method :falsy?, :FALSY?
 
-    def FALTHY(object)
-      if FALTHY? object
+    def FALSY(object)
+      if FALSY? object
         pass
       else
-        failure("It is a falthy(nil/false) object.",
+        failure("It is a falsy(nil/false) object.",
                 "\"#{object.inspect}\" is a truthy(not nil/false) object.")
       end
     ensure
       _declared!
     end
 
-    alias_method :falthy, :FALTHY
-    alias_method :NG, :FALTHY
+    alias_method :falsy, :FALSY
+    alias_method :NG, :FALSY
     alias_method :ng, :NG
 
     # pass if occured the error is a own/subclassis instance

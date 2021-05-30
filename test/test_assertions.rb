@@ -80,10 +80,10 @@ class Test_Declare_Assertions < Test::Unit::TestCase
 
   def test_FALTHY?
     Scope.it = nil
-    assert_equal false, Scope.FALTHY?(true)
-    assert_equal false, Scope.FALTHY?(0)
-    assert_equal false, Scope.FALTHY?('')
-    assert_equal true, Scope.FALTHY?(false)
-    assert_equal true, Scope.FALTHY?(nil)
+    assert_equal false, Scope.FALSY?(true)
+    assert_equal false, Scope.FALSY?(0)
+    assert_equal false, Scope.FALSY?('')
+    assert_equal true, Scope.FALSY?(false)
+    assert_equal true, Scope.FALSY?(nil)
   end
 end
