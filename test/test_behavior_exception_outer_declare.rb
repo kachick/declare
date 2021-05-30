@@ -14,26 +14,27 @@ class Person
     @name = name
     @birth = Time.now
   end
-
 end
 
 app_dir = "#{File.expand_path('..', __dir__)}"
 require app_dir + '/lib/declare/autorun'
 
-The Person.new('John') do |john|
-  can :name
+Declare.describe do
+  The Person.new('John') do |john|
+    can :name
 
-  The john.birth do
-    kind_of Time
+    The john.birth do
+      kind_of Time
+    end
   end
 end
 
-raise Exception
+raise Exception, 'Unexpected exception occurred out of scope'
 RUBY
 
   def test_result
     result = execute_ruby_code_in_other_process(CODE)
-    assert_match(/Exception/, result.all_output)
+    assert_match(/Unexpected exception occurred out of scope/, result.all_output)
     assert_equal(1, result.exitstatus)
   end
 end

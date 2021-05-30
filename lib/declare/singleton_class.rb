@@ -2,8 +2,8 @@
 # frozen_string_literal: true
 
 module Declare
-  @auto_run = false
-  @unexpected_failures = {}
+  ScopeSummary = Struct.new(:target, :caller_entry, :nesting_level, keyword_init: true)
+
   @failures = {}
   @scope_summaries = []
   @pass_counter = 0
@@ -12,26 +12,27 @@ module Declare
   class << self
     attr_reader :failures
 
-    ScopeSummary = Struct.new(:target, :description, :caller_entry, :nesting_level, keyword_init: true)
+    def describe(&block)
+      BasicScope.new.instance_exec(&block)
+    end
 
     def auto_run
-      @auto_run = true
       at_exit do
         $! || report
       end
     end
 
-    # @return [Scope]
+    # @return [AssertionsScope]
     def new_scope(target, &block)
-      Scope.new(target).instance_exec(target, &block)
+      AssertionsScope.new(target).instance_exec(target, &block)
     end
 
     def declared!
       @declare_counter += 1
     end
 
-    def scope!(target, caller_entry, description=nil)
-      @scope_summaries << ScopeSummary.new(target: target, description: description, caller_entry: caller_entry, nesting_level: caller_entry.block_level)
+    def scope!(target, caller_entry)
+      @scope_summaries << ScopeSummary.new(target: target, caller_entry: caller_entry, nesting_level: caller_entry.block_level)
     end
 
     def pass!
@@ -43,15 +44,18 @@ module Declare
       @failures[@scope_summaries.last] << report
     end
 
+    def failure_count
+      @failures.values.flatten.size
+    end
+
     def report
       unless @failures.empty?
         report_detail
         puts '-' * 78
       end
 
-      failure_count = @failures.values.flatten.length
+      failure_count = failure_count()
       puts "#{@scope_summaries.length} scopes, #{@declare_counter} assertions, #{failure_count} failures"
-      puts " Unexpected Failers: #{@unexpected_failures.inspect}" unless @unexpected_failures.empty?
 
       exit(failure_count)
     end
