@@ -4,6 +4,8 @@
 require_relative 'helper'
 
 class Test_Decalre_Behavior_Exception_Outer_Declare < Test::Unit::TestCase
+  include DeclareHelpers
+
   CODE = <<"RUBY"
 class Person
   attr_reader :name, :birth
@@ -15,7 +17,7 @@ class Person
 
 end
 
-app_dir = "#{File.expand_path('..', File.dirname(__FILE__))}"
+app_dir = "#{File.expand_path('..', __dir__)}"
 require app_dir + '/lib/declare/autorun'
 
 The Person.new('John') do |john|
@@ -30,11 +32,8 @@ raise Exception
 RUBY
 
   def test_result
-    out = `ruby -w 2>&1 <<RUBY_CODE
-#{CODE}
-RUBY_CODE
-`
-    assert_equal(1, $?.exitstatus)
-    assert_match(/Exception/, out)
+    result = execute_ruby_code_in_other_process(CODE)
+    assert_match(/Exception/, result.all_output)
+    assert_equal(1, result.exitstatus)
   end
 end

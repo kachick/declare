@@ -5,13 +5,13 @@ require_relative 'helper'
 
 require_relative '../lib/declare'
 
-class Foo
-  include Declare::Assertions
-
-  attr_accessor :it
-end
-
 class Test_Declare_Assertions < Test::Unit::TestCase
+  class Foo
+    include Declare::Assertions
+
+    attr_accessor :it
+  end
+
   Scope = Foo.new
 
   def test_A?

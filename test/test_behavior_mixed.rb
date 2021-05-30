@@ -4,6 +4,8 @@
 require_relative 'helper'
 
 class Test_Decalre_Behavior_Mixed < Test::Unit::TestCase
+  include DeclareHelpers
+
   CODE = <<"RUBY"
 class Person
   attr_reader :name, :birth
@@ -14,7 +16,7 @@ class Person
   end
 end
 
-app_dir = "#{File.expand_path('..', File.dirname(__FILE__))}"
+app_dir = "#{File.expand_path('..', __dir__)}"
 require app_dir + '/lib/declare/autorun'
 
 The Person.new('John') do |john|
@@ -40,10 +42,8 @@ end
 RUBY
 
   def test_result
-    out = `ruby -w 2>&1 <<RUBY_CODE
-#{CODE}
-RUBY_CODE`
-    assert_equal(2, $?.exitstatus)
-    assert_match(/3 scopes, 11 assertions, 2 failures/, out)
+    result = execute_ruby_code_in_other_process(CODE)
+    assert_match(/3 scopes, 11 assertions, 2 failures/, result.all_output)
+    assert_equal(2, result.exitstatus)
   end
 end

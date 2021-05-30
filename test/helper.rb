@@ -19,18 +19,17 @@ Warning.process do |_warning|
   :raise
 end
 
-# class Test::Unit::TestCase
-#   module MyNewLibraryHelpers
-#     def awesome_helper
-#       nil
-#     end
-#   end
+class Test::Unit::TestCase
+  module DeclareHelpers
+    ExecuteResult = Struct.new(:all_output, :exitstatus, keyword_init: true)
 
-#   module MyNewLibraryAssertions
-#     def assert_awesome(object)
-#       assert do
-#         'foo'.instance_of?(String)
-#       end
-#     end
-#   end
-# end
+    # @return [ExecuteResult]
+    def execute_ruby_code_in_other_process(code)
+      out = `ruby -w 2>&1 <<RUBY_CODE
+#{code}
+RUBY_CODE`
+
+      ExecuteResult.new(all_output: out, exitstatus: $?.exitstatus)
+    end
+  end
+end
