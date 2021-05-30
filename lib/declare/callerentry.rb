@@ -9,7 +9,6 @@ module Declare
       def parse(caller_entry)
         matched = /\A(?<file_name>.+?):(?<line_number>\d+)(?::in `(?<method_name>.*)')?/.match(caller_entry)
         if matched
-          # file_name, line_number, method_name = $1, $2.to_i, $3
           block_level = case matched[:method_name]
                         when /block \((\d+) levels\)/
                           Regexp.last_match(1).to_i
