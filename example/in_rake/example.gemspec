@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Gem::Specification.new do |gem|
   gem.authors       = ['foo bar']
   gem.email         = ['foo@example.com']

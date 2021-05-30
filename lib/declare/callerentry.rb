@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 module Declare
-  CallerEntry = Struct.new :file_name, :line_number, :method_name, :block_level do
+  CallerEntry = Struct.new(:file_name, :line_number, :method_name, :block_level) do
     class << self
       # @param [String] caller_entry
       # @return [CallerEntry]
@@ -13,7 +13,7 @@ module Declare
           # file_name, line_number, method_name = $1, $2.to_i, $3
           block_level = case matched[:method_name]
                         when /block \((\d+) levels\)/
-                          $1.to_i
+                          Regexp.last_match(1).to_i
                         when /block/
                           1
                         else
@@ -25,7 +25,6 @@ module Declare
           raise TypeError, caller_entry
         end
       end
-
     end
 
     def to_s

@@ -11,10 +11,9 @@ module Declare
     alias_method :A?, :INSTANCE_OF?
     alias_method :a?, :A?
 
-
     # @param [Class] klass
     def INSTANCE_OF(klass)
-      if INSTANCE_OF? klass
+      if INSTANCE_OF?(klass)
         pass
       else
         failure("It is #{klass}'s instance.",
@@ -28,14 +27,14 @@ module Declare
     alias_method :a, :A
 
     def KIND_OF?(family)
-      @it.kind_of? family
+      @it.kind_of?(family)
     end
 
     alias_method :KIND?, :KIND_OF?
     alias_method :kind?, :KIND?
 
     def KIND_OF(family)
-      if KIND_OF? family
+      if KIND_OF?(family)
         pass
       else
         failure("It is kind of #{family.inspect}.",
@@ -54,14 +53,14 @@ module Declare
     # true if can use for hash-key
     def EQL?(sample)
       @it.eql?(sample) && sample.eql?(@it) && (@it.hash == sample.hash) &&
-      ({@it => true}.has_key? sample)
+        { @it => true }.key?(sample)
     end
 
     def EQL(sample)
-      if EQL? sample
+      if EQL?(sample)
         pass
       else
-        failure 'It\'s able to use key in any Hash object.'
+        failure('It\'s able to use key in any Hash object.')
       end
     ensure
       _declared!
@@ -77,7 +76,7 @@ module Declare
     alias_method :is?, :IS?
 
     def IS(other)
-      if IS? other
+      if IS?(other)
         pass
       else
         failure('it == other',
@@ -96,7 +95,7 @@ module Declare
     alias_method :not?, :NOT?
 
     def NOT(other)
-      if NOT? other
+      if NOT?(other)
         pass
       else
         failure("It is not other(#{other.inspect}).",
@@ -133,14 +132,14 @@ module Declare
 
     # true if bidirectional passed #equal, and __id__ is same value
     def EQUAL?(other)
-      @it.equal?(other) && other.equal?(@it) && (@it.__id__.equal? other.__id__)
+      @it.equal?(other) && other.equal?(@it) && @it.__id__.equal?(other.__id__)
     end
 
     def EQUAL(other)
-      if EQUAL? other
+      if EQUAL?(other)
         pass
       else
-        failure("@it.equal?(other) && other.equal?(@it) && (@it.__id__.equal? other.__id__) #=> truthy",
+        failure('@it.equal?(other) && other.equal?(@it) && (@it.__id__.equal? other.__id__) #=> truthy',
                 "falsy, it(#{@it.__id__}), other(#{other.__id__})")
       end
     ensure
@@ -153,7 +152,7 @@ module Declare
 
     # true if under "respond_to?"
     def RESPOND?(message)
-      @it.respond_to? message
+      @it.respond_to?(message)
     end
 
     alias_method :respond?, :RESPOND?
@@ -182,10 +181,10 @@ module Declare
     alias_method :truthy?, :TRUTHY?
 
     def TRUTHY(object)
-      if TRUTHY? object
+      if TRUTHY?(object)
         pass
       else
-        failure("It is a truthy(not nil/false) object.",
+        failure('It is a truthy(not nil/false) object.',
                 "\"#{object.inspect}\" is a falsy(nil/false) object.")
       end
     ensure
@@ -197,16 +196,16 @@ module Declare
     alias_method :ok, :OK
 
     def FALSY?(object)
-      ! object
+      !object
     end
 
     alias_method :falsy?, :FALSY?
 
     def FALSY(object)
-      if FALSY? object
+      if FALSY?(object)
         pass
       else
-        failure("It is a falsy(nil/false) object.",
+        failure('It is a falsy(nil/false) object.',
                 "\"#{object.inspect}\" is a truthy(not nil/false) object.")
       end
     ensure
@@ -220,15 +219,15 @@ module Declare
     # pass if occured the error is a own/subclassis instance
     # @param [Class] exception_klass
     def RESCUE(exception_klass, &block)
-      fmt_err = ->err_cls{err_cls.ancestors.take_while{|mod|mod != Object}.join(' < ')}
+      fmt_err = ->err_cls { err_cls.ancestors.take_while { |mod| mod != Object }.join(' < ') }
       yield
     rescue exception_klass
       pass
     rescue ::Exception
-      failure("Faced a exception, that kind of #{exception_klass}(#{fmt_err.call exception_klass}).",
-              "Faced a exception, that instance of #{$!.class}(#{fmt_err.call $!.class}).", 2)
+      failure("Faced a exception, that kind of #{exception_klass}(#{fmt_err.call(exception_klass)}).",
+              "Faced a exception, that instance of #{$!.class}(#{fmt_err.call($!.class)}).", 2)
     else
-      failure("Faced a exception, that kind of #{exception_klass}(#{fmt_err.call exception_klass}).",
+      failure("Faced a exception, that kind of #{exception_klass}(#{fmt_err.call(exception_klass)}).",
               'The block was not faced any exceptions.', 2)
     ensure
       _declared!
@@ -239,7 +238,7 @@ module Declare
     def CATCH(exception_klass, &block)
       yield
     rescue ::Exception
-      if $!.instance_of? exception_klass
+      if $!.instance_of?(exception_klass)
         pass
       else
         failure("Faced a exception, that instance of #{exception_klass}.",
@@ -263,7 +262,7 @@ module Declare
     end
 
     def failure(expected, actual, level=1)
-      ::Declare.failure! "#{_declare_called_from level}\n  Expected: #{expected}\n  Actual  : #{actual}\n\n"
+      ::Declare.failure!("#{_declare_called_from(level)}\n  Expected: #{expected}\n  Actual  : #{actual}\n\n")
     end
   end
 end

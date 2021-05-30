@@ -12,7 +12,7 @@ module Declare
   class << self
     attr_reader :failures
 
-    ScopeSummary = Struct.new :target, :description, :caller_entry, :nesting_level
+    ScopeSummary = Struct.new(:target, :description, :caller_entry, :nesting_level)
 
     def auto_run
       @auto_run = true
@@ -60,7 +60,7 @@ module Declare
       puts "#{@scope_summaries.length} scopes, #{@declare_counter} assertions, #{failure_count} failures"
       puts " Unexpected Failers: #{@unexpected_failures.inspect}" unless @unexpected_failures.empty?
 
-      exit failure_count
+      exit(failure_count)
     end
 
     private
@@ -81,7 +81,7 @@ module Declare
           end
         )
         puts header, nil
-        puts lines.map{|l|"* #{l}"}
+        puts lines.map { |l| "* #{l}" }
       end
     end
   end
