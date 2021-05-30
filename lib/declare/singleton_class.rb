@@ -21,14 +21,6 @@ module Declare
       end
     end
 
-    def auto_run?
-      @auto_run
-    end
-
-    def unexpected_failure_in_the(scoped, exception, _caller)
-      @unexpected_failures[scoped] = [exception, _caller]
-    end
-
     def new_scope(target, &block)
       Scope.new(target).instance_exec(target, &block)
     end
