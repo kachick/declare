@@ -8,9 +8,10 @@ module Declare
       # @return [CallerEntry]
       # reference: http://doc.ruby-lang.org/ja/1.9.3/class/Kernel.html
       def parse(caller_entry)
-        if /\A(.+?):(\d+)(?::in `(.*)')?/ =~ caller_entry
-          file_name, line_number, method_name = $1, $2.to_i, $3
-          block_level = case method_name
+        matched = /\A(?<file_name>.+?):(?<line_number>\d+)(?::in `(?<method_name>.*)')?/.match(caller_entry)
+        if matched
+          # file_name, line_number, method_name = $1, $2.to_i, $3
+          block_level = case matched[:method_name]
                         when /block \((\d+) levels\)/
                           $1.to_i
                         when /block/
@@ -19,7 +20,7 @@ module Declare
                           0
                         end
 
-          new file_name, line_number, method_name, block_level
+          new(matched[:file_name], Integer(matched[:line_number]), matched[:method_name], block_level)
         else
           raise TypeError, caller_entry
         end
