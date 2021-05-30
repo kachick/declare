@@ -11,12 +11,10 @@ module Declare
       Declare.new_scope(target, &block)
     end
 
-    alias_method :_original_caller, :caller
-
     # @param [Integer] level
     # @return [CallerEntry]
     def _declare_called_from(level=0)
-      CallerEntry.parse(_original_caller[1 + level])
+      CallerEntry.parse(caller[1 + level])
     end
   end
 end

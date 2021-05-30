@@ -12,7 +12,5 @@ module Declare
     def initialize(target)
       @it = target
     end
-
-    alias_method :_caller, :caller
   end
 end
