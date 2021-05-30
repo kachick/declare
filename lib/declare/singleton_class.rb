@@ -51,7 +51,7 @@ module Declare
 
       failure_count = @failures.values.flatten.length
       puts "#{@scope_summaries.length} scopes, #{@declare_counter} assertions, #{failure_count} failures"
-      puts " Unexpected Failers: #{@unexpected_failures.inspect}" unless @unexpected_failures.empty?
+      puts " Unexpected Failures: #{@unexpected_failures.inspect}" unless @unexpected_failures.empty?
 
       exit(failure_count)
     end
