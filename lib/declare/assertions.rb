@@ -216,7 +216,7 @@ module Declare
     alias_method :NG, :FALSY
     alias_method :ng, :NG
 
-    # pass if occured the error is a own/subclassis instance
+    # pass if occurred the error is a own/subclasses instance
     # @param [Class] exception_klass
     def RESCUE(exception_klass, &block)
       fmt_err = ->err_cls { err_cls.ancestors.take_while { |mod| mod != Object }.join(' < ') }
