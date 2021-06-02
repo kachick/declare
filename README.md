@@ -7,13 +7,13 @@ A unit testing framework
 
 ## Usage
 
-Require Ruby 2.5 or later
+Require Ruby 2.6 or later
 
 Add below code into your Gemfile`
 
 ```ruby
 group :test do
-  gem 'declare', '>= 0.3.0', '< 0.4.0'
+  gem 'declare', '>= 0.3.1', '< 0.4.0'
 end
 ```
 
