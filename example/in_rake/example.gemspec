@@ -11,7 +11,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ['lib']
   gem.version       = '0.0.1'
 
-  gem.required_ruby_version = '>= 2.5'
+  gem.required_ruby_version = '>= 2.6.0'
 
   gem.add_development_dependency 'declare'
   gem.add_development_dependency 'rake'

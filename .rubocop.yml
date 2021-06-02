@@ -5,7 +5,7 @@ require:
   - rubocop-md
 
 AllCops:
-  TargetRubyVersion: 2.5
+  TargetRubyVersion: 2.6
   DisplayCopNames: true
   Exclude:
     - '**/vendor/**/*'
@@ -730,6 +730,16 @@ Style/YodaCondition:
 Style/ZeroLengthPredicate:
   Enabled: true
 
+Style/InPatternThen:
+  Enabled: true
+
+Style/QuotedSymbols:
+  Enabled: true
+  EnforcedStyle: 'single_quotes'
+
+Style/MultilineInPatternThen:
+  Enabled: true
+
 Layout/TrailingEmptyLines:
   Enabled: true
 
@@ -786,6 +796,15 @@ Layout/EmptyLineBetweenDefs:
 Layout/SpaceAroundEqualsInParameterDefault:
   Enabled: true
   EnforcedStyle: 'no_space'
+
+Layout/SpaceAroundKeyword:
+  Enabled: true
+
+Layout/ArgumentAlignment:
+  Enabled: true
+
+Layout/CaseIndentation:
+  Enabled: true
 
 Naming/FileName:
   Enabled: true
@@ -890,6 +909,9 @@ Lint/RaiseException:
   Exclude:
     - 'test/**/*'
     - 'example/**/*'
+
+Lint/EmptyInPattern:
+  Enabled: true
 
 Rubycw/Rubycw:
   Enabled: true
