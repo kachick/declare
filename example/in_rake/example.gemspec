@@ -11,6 +11,10 @@ Gem::Specification.new do |gem|
   gem.require_paths = ['lib']
   gem.version       = '0.0.1'
 
+  gem.metadata = {
+    'rubygems_mfa_required' => 'true'
+  }
+
   gem.required_ruby_version = '>= 2.7.0'
 
   gem.add_development_dependency 'declare'
