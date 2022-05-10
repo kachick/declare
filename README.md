@@ -13,7 +13,7 @@ Add below code into your Gemfile`
 
 ```ruby
 group :test do
-  gem 'declare', '>= 0.3.1', '< 0.4.0'
+  gem 'declare', '~> 0.4.0'
 end
 ```
 
