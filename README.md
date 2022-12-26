@@ -1,7 +1,7 @@
 # declare
 
 ![Build Status](https://github.com/kachick/declare/actions/workflows/test_behaviors.yml/badge.svg?branch=main)
-[![Gem Version](https://badge.fury.io/rb/declare.png)](http://badge.fury.io/rb/declare)
+[![Gem Version](https://badge.fury.io/rb/declare.svg)](http://badge.fury.io/rb/declare)
 
 A unit testing framework
 
