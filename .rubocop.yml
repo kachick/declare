@@ -364,7 +364,7 @@ Style/MethodCallWithArgsParentheses:
   AllowParenthesesInChaining: true
   AllowParenthesesInCamelCaseMethod: true
   AllowParenthesesInStringInterpolation: true
-  IgnoredMethods: ['raise', 'puts', 'yield', 'require', 'require_relative', 'load', 'to', 'describe', 'context']
+  AllowedMethods: ['raise', 'puts', 'yield', 'require', 'require_relative', 'load', 'to', 'describe', 'context']
   Exclude:
     - '*.gemspec'
     - '**.md'
