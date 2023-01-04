@@ -31,6 +31,6 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and deploy YARD
     steps:
-      - uses: kachick/deploy-yard-to-pages@v1.2.0
+      - uses: kachick/deploy-yard-to-pages@290fe8afbb89bfcb9784f297e6000cb8e942a92b
         with:
           ruby-version: '3.1'
