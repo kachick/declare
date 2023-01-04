@@ -32,5 +32,6 @@ jobs:
     name: Build and deploy YARD
     steps:
       - uses: kachick/deploy-yard-to-pages@290fe8afbb89bfcb9784f297e6000cb8e942a92b
+        id: deployment
         with:
           ruby-version: '3.1'
