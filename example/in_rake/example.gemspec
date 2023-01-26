@@ -16,7 +16,4 @@ Gem::Specification.new do |gem|
   }
 
   gem.required_ruby_version = '>= 2.7'
-
-  gem.add_development_dependency 'declare'
-  gem.add_development_dependency 'rake'
 end
