@@ -3,7 +3,7 @@
 
 require_relative 'helper'
 
-class Test_Decalre_Behavior_Exception_Outer_Declare < Test::Unit::TestCase
+class Test_Declare_Behavior_Exception_Outer_Declare < Test::Unit::TestCase
   include DeclareHelpers
 
   CODE = <<"RUBY".freeze
