@@ -18,7 +18,7 @@ module Declare
                           0
                         end
 
-          new(file_name: matched[:file_name], line_number: Integer(matched[:line_number]), method_name: matched[:method_name], block_level: block_level)
+          new(file_name: matched[:file_name], line_number: Integer(matched[:line_number]), method_name: matched[:method_name], block_level:)
         else
           raise TypeError, caller_entry
         end
