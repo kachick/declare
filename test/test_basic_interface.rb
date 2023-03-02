@@ -4,7 +4,7 @@
 require_relative 'helper'
 require_relative '../lib/declare'
 
-class Test_Decalre_Basic_Interface < Test::Unit::TestCase
+class Test_Declare_Basic_Interface < Test::Unit::TestCase
   class Person
     attr_reader :name, :birth
 

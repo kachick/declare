@@ -32,7 +32,7 @@ module Declare
     end
 
     def scope!(target, caller_entry)
-      @scope_summaries << ScopeSummary.new(target: target, caller_entry: caller_entry, nesting_level: caller_entry.block_level)
+      @scope_summaries << ScopeSummary.new(target:, caller_entry:, nesting_level: caller_entry.block_level)
     end
 
     def pass!

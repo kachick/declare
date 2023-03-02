@@ -3,10 +3,10 @@
 
 require_relative 'helper'
 
-class Test_Decalre_Behavior_Mixed < Test::Unit::TestCase
+class Test_Declare_Behavior_Mixed < Test::Unit::TestCase
   include DeclareHelpers
 
-  CODE = <<"RUBY"
+  CODE = <<"RUBY".freeze
 class Person
   attr_reader :name, :birth
 
