@@ -13,7 +13,7 @@ end
 
 group :development do
   gem 'yard', '~> 0.9.32', require: false
-  gem 'rubocop', '~> 1.48.1', require: false
+  gem 'rubocop', '~> 1.49.0', require: false
   gem 'rubocop-rake', '~> 0.6.0', require: false
 end
 
