@@ -1,21 +1,16 @@
 # declare
 
+- _**This repository is archived**_
+- _**No longer maintained**_
+- _**All versions have been removed from <https://rubygems.org> to free up valuable namespace for other developers**_.
+
 ![Build Status](https://github.com/kachick/declare/actions/workflows/test_behaviors.yml/badge.svg?branch=main)
-[![Gem Version](https://badge.fury.io/rb/declare.svg)](http://badge.fury.io/rb/declare)
 
 A unit testing framework
 
 ## Usage
 
 Require Ruby 3.1 or later
-
-Add below code into your Gemfile`
-
-```ruby
-group :test do
-  gem 'declare', '~> 0.4.0'
-end
-```
 
 ### Overview
 
@@ -94,8 +89,3 @@ to
 ```ruby
 require 'declare/autorun'
 ```
-
-## Links
-
-* [Repository](https://github.com/kachick/declare)
-* [API documents](https://kachick.github.io/declare)
